@@ -20,11 +20,14 @@
     "space-in-parens": "warn",
     "camelcase": "error",
     "@typescript-eslint/no-shadow": ["error"],
+    "@typescript-eslint/no-namespace": "off",
+    "@typescript-eslint/no-empty-interface": "off",
     "no-shadow": "off",
     "no-undef": "off",
     "no-duplicate-imports": "error",
     "import/no-default-export": "warn",
     "react/react-in-jsx-scope": "off",
+    "react/display-name": "off",
     "react/prop-types": "off"
   }
 }
