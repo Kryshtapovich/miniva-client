@@ -1,5 +1,9 @@
+import { observer } from 'miniva-common';
+
 import { SafeAreaView } from 'react-native';
 
-export const ChatsScreen = () => {
+function Component() {
   return <SafeAreaView></SafeAreaView>;
-};
+}
+
+export const ChatsScreen = observer(Component);
