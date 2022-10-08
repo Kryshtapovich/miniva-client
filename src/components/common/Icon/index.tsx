@@ -39,7 +39,7 @@ interface Props {
   style?: StyleProp<TextStyle>;
 }
 
-export const Icon = (props: Props) => {
+export function Icon(props: Props) {
   const { set, ...rest } = props;
   switch (set) {
     case 'AntDesign':
@@ -73,4 +73,4 @@ export const Icon = (props: Props) => {
     default:
       return null;
   }
-};
+}

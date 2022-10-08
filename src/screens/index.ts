@@ -1,6 +1,6 @@
-export { CarScreen } from './CarScreen';
-export { CarsScreen } from './CarsScreen';
-export { ChatScreen } from './ChatScreen';
-export { ChatsScreen } from './ChatsScreen';
-export { FavoritesScreen } from './FavoritesScreen';
-export { ProfileScreen } from './ProfileScreen';
+export { CarDetailsScreen } from './CarDetails';
+export { CarsScreen } from './Cars';
+export { ChatDetailsScreen } from './ChatDetails';
+export { ChatsScreen } from './Chats';
+export { FavoritesScreen } from './Favorites';
+export { ProfileScreen } from './Profile';

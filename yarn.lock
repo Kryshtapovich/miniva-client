@@ -4035,7 +4035,7 @@ minimist@^1.2.0, minimist@^1.2.6:
 
 "miniva-common@https://github.com/miniva-cars/miniva-common":
   version "1.0.0"
-  resolved "https://github.com/miniva-cars/miniva-common#f75e81732128b40e4e5dd414b1194993fc460914"
+  resolved "https://github.com/miniva-cars/miniva-common#04dd31d8906b3d0866eb57d28781a54e5f808334"
   dependencies:
     axios "^1.0.0"
     mobx "^6.6.2"

@@ -1,6 +1,6 @@
-import { observer } from 'miniva-common';
-
 import { SafeAreaView } from 'react-native';
+
+import { observer } from 'miniva-common';
 
 function Component() {
   return <SafeAreaView></SafeAreaView>;

@@ -4,6 +4,6 @@ import { createStore } from 'miniva-common';
 
 const storeContext = createContext(createStore());
 
-export const useStore = () => {
+export function useStore() {
   return useContext(storeContext);
-};
+}

@@ -1,5 +1,5 @@
 import { SafeAreaView } from 'react-native';
 
-export const ProfileScreen = () => {
+export function ChatDetailsScreen() {
   return <SafeAreaView></SafeAreaView>;
-};
+}

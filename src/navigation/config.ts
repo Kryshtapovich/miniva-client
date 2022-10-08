@@ -2,10 +2,10 @@ import { ComponentProps } from 'react';
 
 import { Icon } from '@components/common';
 import {
-  CarScreen,
+  CarDetailsScreen,
   CarsScreen,
   FavoritesScreen,
-  ChatScreen,
+  ChatDetailsScreen,
   ChatsScreen,
   ProfileScreen,
 } from '@screens';
@@ -60,11 +60,11 @@ export const routes: Array<StackRoute> = [
   {
     name: RouteNames.car,
     headerShown: false,
-    component: CarScreen,
+    component: CarDetailsScreen,
   },
   {
     name: RouteNames.chat,
     headerShown: false,
-    component: ChatScreen,
+    component: ChatDetailsScreen,
   },
 ];

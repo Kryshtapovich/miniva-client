@@ -1,10 +1,10 @@
+import { Text, View } from 'react-native';
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
-import { Text, View } from 'react-native';
 
 import { useStyles } from './styles';
 
-export const Header = (props: BottomTabHeaderProps | NativeStackHeaderProps) => {
+export function Header(props: BottomTabHeaderProps | NativeStackHeaderProps) {
   const { route } = props;
 
   const styles = useStyles();
@@ -14,4 +14,4 @@ export const Header = (props: BottomTabHeaderProps | NativeStackHeaderProps) => 
       <Text style={styles.text}>{route.name}</Text>
     </View>
   );
-};
+}

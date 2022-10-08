@@ -1,10 +1,10 @@
 import { Text, TouchableOpacity, View } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
-import { useStyles } from './styles';
 import { theme } from '@utils/constants';
+import { useStyles } from './styles';
 
-export const TabBar = (props: BottomTabBarProps) => {
+export function TabBar(props: BottomTabBarProps) {
   const { state, descriptors, navigation } = props;
   const styles = useStyles();
 
@@ -52,4 +52,4 @@ export const TabBar = (props: BottomTabBarProps) => {
       })}
     </View>
   );
-};
+}

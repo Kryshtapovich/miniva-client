@@ -12,10 +12,10 @@ interface StyleParams {
 
 type StyleCallback<T> = (prams: StyleParams) => StyleSheet.NamedStyles<T>;
 
-export const withStyles = <T>(styles: StyleCallback<T>) => {
+export function withStyles<T>(styles: StyleCallback<T>) {
   return () => {
     const insets = useSafeAreaInsets();
     const { width, height } = Dimensions.get('screen');
     return styles({ theme, insets, width, height });
   };
-};
+}
