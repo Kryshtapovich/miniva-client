@@ -9,6 +9,7 @@ export const theme = {
     brown: '#99501d',
     primary: '#c8cbab',
     light: '#5b7052',
+    gold: 'gold',
   },
   spacing: {
     xxs: 2,
@@ -26,8 +27,9 @@ export const theme = {
   },
   font: {
     size: {
-      s: 8,
-      m: 12,
+      xs: 8,
+      s: 12,
+      m: 16,
       l: 20,
       xl: 24,
     },
