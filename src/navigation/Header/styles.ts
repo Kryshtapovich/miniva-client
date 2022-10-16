@@ -13,6 +13,6 @@ export const useStyles = withStyles(({ theme, insets, createShadow }) => ({
   },
   text: {
     fontSize: theme.font.size.l,
-    fontWeight: 'bold',
+    fontFamily: theme.font.family.GilroyBold,
   },
 }));

@@ -9,7 +9,7 @@ import { useStyles } from './styles';
 
 interface Props {
   cars: Array<Car>;
-  toggleFavorite: (carId: number) => void;
+  toggleFavorite: (carId: number) => Promise<void>;
 }
 
 export function CarList(props: Props) {

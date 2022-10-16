@@ -10,6 +10,9 @@ export const theme = {
     primary: '#c8cbab',
     light: '#5b7052',
     gold: 'gold',
+    success: '#07bc0c',
+    error: '#e74c3c',
+    text: 'black',
   },
   spacing: {
     xxs: 2,
@@ -32,6 +35,11 @@ export const theme = {
       m: 16,
       l: 20,
       xl: 24,
+    },
+    family: {
+      Gilroy: 'Gilroy-Medium',
+      GilroySemiBold: 'Gilroy-SemiBold',
+      GilroyBold: 'Gilroy-Bold',
     },
   },
 };

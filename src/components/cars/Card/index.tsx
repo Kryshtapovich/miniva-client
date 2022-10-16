@@ -1,17 +1,18 @@
 import { memo } from 'react';
-import { Pressable, StyleProp, Text, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native';
 
 import { Car } from 'miniva-common';
 
-import { Icon, Spacer } from '@components/common';
+import { Icon, Spacer, Typography } from '@components/common';
 import { theme } from '@utils/constants';
+import { showMessage } from '@utils/helpers';
 
 import { useStyles } from './styles';
 
 interface Props {
   car: Car;
   style?: StyleProp<ViewStyle>;
-  toggleFavorite: (id: number) => void;
+  toggleFavorite: (id: number) => Promise<void>;
 }
 
 function Component(props: Props) {
@@ -20,17 +21,28 @@ function Component(props: Props) {
 
   const styles = useStyles();
 
-  const handlePress = () => {
-    toggleFavorite(id);
+  const handlePress = async () => {
+    try {
+      await toggleFavorite(id);
+      showMessage({
+        type: 'success',
+        message: `Car has been successfully ${isFavorite ? 'removed from' : 'added to'} favorites`,
+      });
+    } catch {
+      showMessage({
+        type: 'error',
+        message: `An error occured while ${isFavorite ? 'removing from' : 'adding to'} favorites`,
+      });
+    }
   };
 
   return (
-    <TouchableOpacity style={[styles.container, style]}>
+    <TouchableOpacity activeOpacity={0.6} style={[styles.container, style]}>
       <View style={styles.spacedRow}>
         <View style={styles.title}>
-          <Text style={styles.mainInfo}>{manufacturer}</Text>
+          <Typography style={styles.mainInfo} text={manufacturer} />
           <Spacer horizontal={'xs'} />
-          <Text style={styles.mainInfo}>{model}</Text>
+          <Typography style={styles.mainInfo} text={model} />
         </View>
         <Pressable hitSlop={30} onPress={handlePress}>
           <Icon
@@ -45,8 +57,8 @@ function Component(props: Props) {
       <View style={styles.image} />
       <Spacer vertical={'s'} />
       <View style={styles.spacedRow}>
-        <Text>{year}</Text>
-        <Text style={styles.mainInfo}>{price}</Text>
+        <Typography style={styles.year} text={year.toString()} />
+        <Typography style={styles.mainInfo} text={`${price} $`} />
       </View>
     </TouchableOpacity>
   );

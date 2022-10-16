@@ -2,7 +2,8 @@ import { withStyles } from '@utils/hooks';
 
 export const useStyles = withStyles(({ theme }) => ({
   container: {
-    flex: 1,
-    backgroundColor: theme.colors.background,
+    color: theme.colors.text,
+    fontSize: theme.font.size.m,
+    fontFamily: theme.font.family.Gilroy,
   },
 }));

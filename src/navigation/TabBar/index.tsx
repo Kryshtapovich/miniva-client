@@ -1,7 +1,9 @@
-import { Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
 import { theme } from '@utils/constants';
+import { Typography } from '@components/common';
+
 import { useStyles } from './styles';
 
 export function TabBar(props: BottomTabBarProps) {
@@ -46,7 +48,7 @@ export function TabBar(props: BottomTabBarProps) {
                 color: focused ? theme.colors.orange : 'black',
                 size: 30,
               })}
-            <Text style={[focused && styles.focused]}>{name}</Text>
+            <Typography style={[focused && styles.focused]} text={name} />
           </TouchableOpacity>
         );
       })}

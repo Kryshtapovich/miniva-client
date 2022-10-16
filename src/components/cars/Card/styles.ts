@@ -15,9 +15,12 @@ export const useStyles = withStyles(({ theme, createShadow }) => ({
   title: {
     flexDirection: 'row',
   },
+  year: {
+    fontFamily: theme.font.family.GilroyBold,
+  },
   mainInfo: {
-    fontSize: theme.font.size.m,
-    fontWeight: 'bold',
+    fontSize: theme.font.size.l,
+    fontFamily: theme.font.family.GilroyBold,
   },
   image: {
     width: '100%',

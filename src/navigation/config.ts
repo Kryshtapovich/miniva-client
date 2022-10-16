@@ -4,7 +4,6 @@ import { Icon } from '@components/common';
 import {
   CarDetailsScreen,
   CarsScreen,
-  FavoritesScreen,
   ChatDetailsScreen,
   ChatsScreen,
   ProfileScreen,
@@ -40,7 +39,7 @@ export const routes: Array<StackRoute> = [
       {
         name: RouteNames.favorites,
         headerShown: true,
-        component: FavoritesScreen,
+        component: CarsScreen,
         icon: { set: 'FontAwesome', name: 'star' },
       },
       {
