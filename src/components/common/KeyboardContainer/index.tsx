@@ -2,6 +2,8 @@ import { PropsWithChildren, useEffect, useState } from 'react';
 import { Keyboard, StyleProp, ViewStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
+import { useStyles } from './styles';
+
 interface Props {
   style?: StyleProp<ViewStyle>;
 }
@@ -21,11 +23,14 @@ export function KeyboardContainer(props: PropsWithChildren<Props>) {
     };
   }, []);
 
+  const styles = useStyles();
+
   return (
     <KeyboardAwareScrollView
+      enableOnAndroid
       scrollEnabled={isScrollable}
-      contentContainerStyle={style}
       showsVerticalScrollIndicator={false}
+      contentContainerStyle={[styles.content, style]}
     >
       {children}
     </KeyboardAwareScrollView>
