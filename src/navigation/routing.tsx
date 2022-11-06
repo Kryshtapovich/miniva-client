@@ -12,26 +12,26 @@ import { Header } from './Header';
 const Stack = createNativeStackNavigator<RouteParamList>();
 const BottomTab = createBottomTabNavigator<RouteParamList>();
 
-export function Navigation() {
-  return (
-    <NavigationContainer>
-      <RootNavigator />
-    </NavigationContainer>
-  );
+interface Props {
+  isAuthorized: boolean;
 }
 
-function RootNavigator() {
+export function Navigator(props: Props) {
+  const { isAuthorized } = props;
+
   return (
-    <Stack.Navigator initialRouteName={RouteNames.cars}>
-      {routes.map(({ name, component, headerShown }) => (
-        <Stack.Screen
-          key={name}
-          name={name}
-          component={Array.isArray(component) ? TabBarWrapper(component) : component}
-          options={{ headerShown, header: (props) => <Header {...props} /> }}
-        />
-      ))}
-    </Stack.Navigator>
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName={isAuthorized ? RouteNames.cars : RouteNames.signIn}>
+        {routes.map(({ name, component, headerShown }) => (
+          <Stack.Screen
+            key={name}
+            name={name}
+            component={Array.isArray(component) ? TabBarWrapper(component) : component}
+            options={{ headerShown, header: (headerProps) => <Header {...headerProps} /> }}
+          />
+        ))}
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

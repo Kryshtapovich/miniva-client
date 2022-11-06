@@ -13,6 +13,8 @@ export const theme = {
     success: '#07bc0c',
     error: '#e74c3c',
     text: 'black',
+    blue: '#4649FF',
+    green: '#14C38E',
   },
   spacing: {
     xxs: 2,

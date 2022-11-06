@@ -1,10 +1,10 @@
-import { SafeAreaView } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import { observer } from 'miniva-common';
 
 import { RouteNames } from '@navigation';
 import { CarList } from '@components/cars';
+import { ScreenContainer } from '@components/common';
 import { useScreenEnter, useStore } from '@utils/hooks';
 
 import { useStyles } from './styles';
@@ -22,9 +22,9 @@ function Component() {
   }, [name]);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScreenContainer contentStyle={styles.content}>
       <CarList cars={cars} toggleFavorite={toggleFavorite} />
-    </SafeAreaView>
+    </ScreenContainer>
   );
 }
 

@@ -1,2 +1,2 @@
 export * from './types';
-export { Navigation } from './routing';
+export { Navigator } from './routing';

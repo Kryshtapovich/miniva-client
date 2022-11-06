@@ -6,4 +6,7 @@ export const useStyles = withStyles(({ theme }) => ({
     fontSize: theme.font.size.m,
     fontFamily: theme.font.family.Gilroy,
   },
+  error: {
+    color: theme.colors.error,
+  },
 }));

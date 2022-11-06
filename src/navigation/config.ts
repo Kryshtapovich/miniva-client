@@ -7,6 +7,8 @@ import {
   ChatDetailsScreen,
   ChatsScreen,
   ProfileScreen,
+  SignInScreen,
+  SignUpScreen,
 } from '@screens';
 
 import { RouteNames } from './types';
@@ -55,6 +57,16 @@ export const routes: Array<StackRoute> = [
         icon: { set: 'FontAwesome5', name: 'user-circle' },
       },
     ],
+  },
+  {
+    name: RouteNames.signIn,
+    headerShown: false,
+    component: SignInScreen,
+  },
+  {
+    name: RouteNames.signUp,
+    headerShown: false,
+    component: SignUpScreen,
   },
   {
     name: RouteNames.car,

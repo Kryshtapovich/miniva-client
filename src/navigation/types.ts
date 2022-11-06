@@ -7,6 +7,8 @@ declare global {
 }
 
 export enum RouteNames {
+  signIn = 'signIn',
+  signUp = 'signUp',
   root = 'Root',
   cars = 'Cars',
   car = 'Car',

@@ -1,10 +1,10 @@
 import { FlashList } from '@shopify/flash-list';
+
 import { Car } from 'miniva-common';
 
 import { Spacer } from '@components/common';
 
 import { CarCard } from '../Card';
-
 import { useStyles } from './styles';
 
 interface Props {
