@@ -1,11 +1,11 @@
 import { useRoute } from '@react-navigation/native';
 
-import { observer } from 'miniva-common';
+import { observer, useStore } from 'miniva-common';
 
 import { RouteNames } from '@navigation';
 import { CarList } from '@components/cars';
 import { ScreenContainer } from '@components/common';
-import { useScreenEnter, useStore } from '@utils/hooks';
+import { useScreenEnter } from '@utils/hooks';
 
 import { useStyles } from './styles';
 
