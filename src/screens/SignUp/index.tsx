@@ -2,20 +2,25 @@ import { useState } from 'react';
 import { Keyboard, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { useSignUpForm } from 'miniva-common';
+import { observer, useSignUpForm, useStore } from 'miniva-common';
 
 import { RouteNames } from '@navigation';
 import { Typography, Spacer, Button, KeyboardContainer, ScreenContainer } from '@components/common';
 import { FormTextInput } from '@components/form';
 
-import { useStyles } from './styles';
 import { useScreenEnter } from '@utils/hooks';
+import { setToken } from '@utils/helpers';
 
-export function SignUpScreen() {
+import { useStyles } from './styles';
+
+function Component() {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { control, errors, onSubmit, reset } = useSignUpForm();
 
+  const { userStore } = useStore();
+  const { signUp } = userStore;
+  console.log(userStore.email);
   const [isLoading, setIsLoading] = useState(false);
 
   useScreenEnter(() => reset, []);
@@ -24,13 +29,19 @@ export function SignUpScreen() {
     navigate(RouteNames.signIn);
   };
 
-  const signUp = onSubmit(() => {
+  const submit = onSubmit(async (data) => {
     Keyboard.dismiss();
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      const { username, email, password } = data;
+      const token = await signUp(username, email, password);
+      setToken(token);
       navigate(RouteNames.root, { screen: RouteNames.cars });
+    } catch (e) {
+      console.log(e);
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   });
 
   return (
@@ -56,7 +67,7 @@ export function SignUpScreen() {
             error={errors.password}
           />
           <Spacer vertical={'l'} />
-          <Button label="Sign Up" onPress={signUp} loading={isLoading} />
+          <Button label="Sign Up" onPress={submit} loading={isLoading} />
         </View>
         <Spacer flex />
         <View style={styles.footer}>
@@ -68,3 +79,5 @@ export function SignUpScreen() {
     </ScreenContainer>
   );
 }
+
+export const SignUpScreen = observer(Component);

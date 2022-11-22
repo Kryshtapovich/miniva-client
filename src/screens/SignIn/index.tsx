@@ -2,21 +2,26 @@ import { useState } from 'react';
 import { Keyboard, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { useSignInForm } from 'miniva-common';
+import { observer, useSignInForm, useStore } from 'miniva-common';
 
 import { RouteNames } from '@navigation';
 import { Typography, Spacer, Button, KeyboardContainer, ScreenContainer } from '@components/common';
 import { FormTextInput } from '@components/form';
+
 import { useScreenEnter } from '@utils/hooks';
+import { setToken } from '@utils/helpers';
 
 import { useStyles } from './styles';
 
-export function SignInScreen() {
+function Component() {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { control, errors, onSubmit, reset } = useSignInForm();
 
   const [isLoading, setIsLoading] = useState(false);
+
+  const { userStore } = useStore();
+  const { signIn } = userStore;
 
   useScreenEnter(() => reset, []);
 
@@ -24,13 +29,17 @@ export function SignInScreen() {
     navigate(RouteNames.signUp);
   };
 
-  const signIn = onSubmit(() => {
+  const submit = onSubmit(async (data) => {
     Keyboard.dismiss();
     setIsLoading(true);
-    setTimeout(() => {
+    try {
+      const { email, password } = data;
+      const token = await signIn(email, password);
+      setToken(token);
       navigate(RouteNames.root, { screen: RouteNames.cars });
+    } finally {
       setIsLoading(false);
-    }, 1500);
+    }
   });
 
   return (
@@ -49,7 +58,7 @@ export function SignInScreen() {
             error={errors.password}
           />
           <Spacer vertical={'l'} />
-          <Button label="Sign In" onPress={signIn} loading={isLoading} />
+          <Button label="Sign In" onPress={submit} loading={isLoading} />
         </View>
         <Spacer flex />
         <View style={styles.footer}>
@@ -61,3 +70,5 @@ export function SignInScreen() {
     </ScreenContainer>
   );
 }
+
+export const SignInScreen = observer(Component);
