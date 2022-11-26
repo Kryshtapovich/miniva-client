@@ -5,23 +5,28 @@ import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view
 import { useStyles } from './styles';
 
 interface Props {
+  scrollEnabled?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
 export function KeyboardContainer(props: PropsWithChildren<Props>) {
-  const { children, style } = props;
+  const { children, style, scrollEnabled } = props;
 
-  const [isScrollable, setIsScrollable] = useState(false);
+  const [isScrollable, setIsScrollable] = useState(!!scrollEnabled);
 
   useEffect(() => {
-    const showSubscription = Keyboard.addListener('keyboardDidShow', () => setIsScrollable(true));
-    const hideSubscription = Keyboard.addListener('keyboardDidHide', () => setIsScrollable(false));
+    if (scrollEnabled === undefined) {
+      const showSubscription = Keyboard.addListener('keyboardDidShow', () => setIsScrollable(true));
+      const hideSubscription = Keyboard.addListener('keyboardDidHide', () =>
+        setIsScrollable(false),
+      );
 
-    return () => {
-      showSubscription.remove();
-      hideSubscription.remove();
-    };
-  }, []);
+      return () => {
+        showSubscription.remove();
+        hideSubscription.remove();
+      };
+    }
+  }, [scrollEnabled]);
 
   const styles = useStyles();
 

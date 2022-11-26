@@ -3,28 +3,32 @@ import { View } from 'react-native';
 
 import { FormField } from 'miniva-common';
 
-import { Spacer, TextInput, Typography } from '@components/common';
+import { Selector, Spacer, Typography } from '@components/common';
 
 import { FormComponentProps, FormFieldProps } from '../types';
 import { useStyles } from './styles';
 
-type Props = FormComponentProps & ComponentProps<typeof TextInput>;
+interface Props extends FormComponentProps {
+  options: ComponentProps<typeof Selector>['options'];
+}
 
-export function FormTextInput(props: Props) {
-  const { name, label, error, control, ...rest } = props;
+export function FormSelector(props: Props) {
+  const { name, label, error, control, options } = props;
 
   const styles = useStyles();
 
   const renderInput = (field: Parameters<FormFieldProps['render']>[0]) => {
-    const { value, onBlur, onChange } = field;
+    const { onChange } = field;
 
     return (
-      <TextInput
-        value={value}
-        onBlur={onBlur}
-        onChangeText={onChange}
-        style={!!error && styles.error}
-        {...rest}
+      <Selector
+        options={options}
+        onChange={onChange}
+        style={{
+          inputIOS: error ? styles.error : undefined,
+          inputAndroid: error ? styles.error : undefined,
+          icon: error ? styles.errorIcon : undefined,
+        }}
       />
     );
   };

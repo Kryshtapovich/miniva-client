@@ -22,12 +22,15 @@ export function Navigator(props: Props) {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName={isAuthorized ? RouteNames.cars : RouteNames.signIn}>
-        {routes.map(({ name, component, headerShown }) => (
+        {routes.map(({ name, component, headerShown, canGoBack }) => (
           <Stack.Screen
             key={name}
             name={name}
             component={Array.isArray(component) ? TabBarWrapper(component) : component}
-            options={{ headerShown, header: (headerProps) => <Header {...headerProps} /> }}
+            options={{
+              headerShown,
+              header: (headerProps) => <Header {...headerProps} canGoBack={canGoBack} />,
+            }}
           />
         ))}
       </Stack.Navigator>
@@ -38,14 +41,14 @@ export function Navigator(props: Props) {
 function TabBarWrapper(screens: Array<TabRoute>) {
   return () => (
     <BottomTab.Navigator tabBar={(props) => <TabBar {...props} />}>
-      {screens.map(({ name, component, icon, headerShown }) => (
+      {screens.map(({ name, component, icon, headerShown, canGoBack }) => (
         <BottomTab.Screen
           key={name}
           name={name}
           component={component}
           options={{
             headerShown,
-            header: (props) => <Header {...props} />,
+            header: (props) => <Header {...props} canGoBack={canGoBack} />,
             tabBarIcon: (props) => <Icon {...icon} {...props} />,
           }}
         />

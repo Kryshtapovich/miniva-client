@@ -15,4 +15,15 @@ export const useStyles = withStyles(({ theme, insets, createShadow }) => ({
     fontSize: theme.font.size.l,
     fontFamily: theme.font.family.GilroyBold,
   },
+  backButton: {
+    position: 'absolute',
+    left: theme.spacing.m,
+    bottom: theme.spacing.m,
+  },
+  icon: {
+    color: theme.colors.text,
+  },
+  hidden: {
+    display: 'none',
+  },
 }));

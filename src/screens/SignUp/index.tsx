@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Keyboard, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
@@ -19,9 +18,7 @@ function Component() {
   const { control, errors, onSubmit, reset } = useSignUpForm();
 
   const { userStore } = useStore();
-  const { signUp } = userStore;
-  console.log(userStore.email);
-  const [isLoading, setIsLoading] = useState(false);
+  const { signUp, loading } = userStore;
 
   useScreenEnter(() => reset, []);
 
@@ -31,16 +28,11 @@ function Component() {
 
   const submit = onSubmit(async (data) => {
     Keyboard.dismiss();
-    setIsLoading(true);
-    try {
-      const { username, email, password } = data;
-      const token = await signUp(username, email, password);
+    const { username, email, password } = data;
+    const token = await signUp(username, email, password);
+    if (token) {
       setToken(token);
       navigate(RouteNames.root, { screen: RouteNames.cars });
-    } catch (e) {
-      console.log(e);
-    } finally {
-      setIsLoading(false);
     }
   });
 
@@ -67,7 +59,7 @@ function Component() {
             error={errors.password}
           />
           <Spacer vertical={'l'} />
-          <Button label="Sign Up" onPress={submit} loading={isLoading} />
+          <Button label="Sign Up" onPress={submit} loading={loading} />
         </View>
         <Spacer flex />
         <View style={styles.footer}>

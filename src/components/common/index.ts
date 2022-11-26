@@ -1,7 +1,11 @@
 export { Icon } from './Icon';
+export { Paper } from './Paper';
+export { Image } from './Image';
 export { Spacer } from './Spacer';
-export { Typography } from './Typography';
-export { TextInput } from './TextInput';
 export { Button } from './Button';
-export { KeyboardContainer } from './KeyboardContainer';
+export { Divider } from './Divider';
+export { Selector } from './Selector';
+export { TextInput } from './TextInput';
+export { Typography } from './Typography';
 export { ScreenContainer } from './ScreenContainer';
+export { KeyboardContainer } from './KeyboardContainer';

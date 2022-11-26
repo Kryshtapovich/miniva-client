@@ -5,3 +5,4 @@ export { ChatsScreen } from './Chats';
 export { ProfileScreen } from './Profile';
 export { SignInScreen } from './SignIn';
 export { SignUpScreen } from './SignUp';
+export { CarFormScreen } from './CarForm';

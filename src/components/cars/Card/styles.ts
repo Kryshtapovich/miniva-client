@@ -1,12 +1,6 @@
 import { withStyles } from '@utils/hooks';
 
-export const useStyles = withStyles(({ theme, createShadow }) => ({
-  container: {
-    borderRadius: theme.radius.m,
-    padding: theme.spacing.m,
-    backgroundColor: theme.colors.white,
-    ...createShadow({ width: 0, height: 3, elevation: 7 }),
-  },
+export const useStyles = withStyles(({ theme }) => ({
   spacedRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -23,9 +17,7 @@ export const useStyles = withStyles(({ theme, createShadow }) => ({
     fontFamily: theme.font.family.GilroyBold,
   },
   image: {
-    width: '100%',
-    aspectRatio: 1,
-    backgroundColor: theme.colors.lightGray,
+    height: 300,
     borderRadius: theme.radius.m,
   },
 }));

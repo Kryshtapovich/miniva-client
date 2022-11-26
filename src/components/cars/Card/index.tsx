@@ -1,11 +1,12 @@
 import { memo } from 'react';
-import { Pressable, StyleProp, TouchableOpacity, View, ViewStyle } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
+import { ImageStyle } from 'react-native-fast-image';
+
+import { FlashList } from '@shopify/flash-list';
 
 import { Car } from 'miniva-common';
 
-import { Icon, Spacer, Typography } from '@components/common';
-import { theme } from '@utils/constants';
-import { showMessage } from '@utils/helpers';
+import { Image, Paper, Spacer, Typography } from '@components/common';
 
 import { useStyles } from './styles';
 
@@ -16,51 +17,40 @@ interface Props {
 }
 
 function Component(props: Props) {
-  const { car, toggleFavorite, style } = props;
-  const { id, manufacturer, model, year, price, isFavorite } = car;
+  const { car, style } = props;
+  const { model, price, car_photos } = car;
 
   const styles = useStyles();
 
-  const handlePress = async () => {
-    try {
-      await toggleFavorite(id);
-      showMessage({
-        type: 'success',
-        message: `Car has been successfully ${isFavorite ? 'removed from' : 'added to'} favorites`,
-      });
-    } catch {
-      showMessage({
-        type: 'error',
-        message: `An error occured while ${isFavorite ? 'removing from' : 'adding to'} favorites`,
-      });
-    }
+  const renderImage = ({ item }: { item: string }) => {
+    return <Image uri={'data:image/png;base64,' + item} style={styles.image as ImageStyle} />;
+  };
+
+  const renderSeparator = () => {
+    return <Spacer horizontal={'s'} />;
   };
 
   return (
-    <TouchableOpacity activeOpacity={0.6} style={[styles.container, style]}>
+    <Paper style={style}>
       <View style={styles.spacedRow}>
         <View style={styles.title}>
-          <Typography style={styles.mainInfo} text={manufacturer} />
           <Spacer horizontal={'xs'} />
           <Typography style={styles.mainInfo} text={model} />
         </View>
-        <Pressable hitSlop={30} onPress={handlePress}>
-          <Icon
-            set={'FontAwesome'}
-            name={isFavorite ? 'star' : 'star-o'}
-            size={25}
-            color={theme.colors.gold}
-          />
-        </Pressable>
       </View>
       <Spacer vertical={'s'} />
-      <View style={styles.image} />
+      <FlashList
+        horizontal
+        data={car_photos}
+        estimatedItemSize={10}
+        renderItem={renderImage}
+        ItemSeparatorComponent={renderSeparator}
+      />
       <Spacer vertical={'s'} />
       <View style={styles.spacedRow}>
-        <Typography style={styles.year} text={year.toString()} />
         <Typography style={styles.mainInfo} text={`${price} $`} />
       </View>
-    </TouchableOpacity>
+    </Paper>
   );
 }
 

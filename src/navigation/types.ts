@@ -1,5 +1,7 @@
 import { ParamListBase, RouteProp } from '@react-navigation/native';
 
+import { Car } from 'miniva-common';
+
 declare global {
   namespace ReactNavigation {
     interface RootParamList extends RouteParamList {}
@@ -16,6 +18,7 @@ export enum RouteNames {
   chats = 'Chats',
   chat = 'Chat',
   profile = 'Profile',
+  carForm = 'Create Post',
 }
 
 export type RouteParams<T extends keyof RouteParamList> = RouteProp<RouteParamList, T>;
@@ -26,4 +29,5 @@ export interface RouteParamList extends ParamListBase {
   [RouteNames.chats]: undefined;
   [RouteNames.chat]: { chatId: number };
   [RouteNames.profile]: undefined;
+  [RouteNames.carForm]: { car: Car } | undefined;
 }
