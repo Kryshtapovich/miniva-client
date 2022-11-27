@@ -1,16 +1,17 @@
 import { PropsWithChildren, useEffect, useState } from 'react';
-import { Keyboard, StyleProp, ViewStyle } from 'react-native';
+import { Keyboard, Platform, StyleProp, ViewStyle } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import { useStyles } from './styles';
 
 interface Props {
   scrollEnabled?: boolean;
+  showScrollBar?: boolean;
   style?: StyleProp<ViewStyle>;
 }
 
 export function KeyboardContainer(props: PropsWithChildren<Props>) {
-  const { children, style, scrollEnabled } = props;
+  const { children, style, scrollEnabled, showScrollBar } = props;
 
   const [isScrollable, setIsScrollable] = useState(!!scrollEnabled);
 
@@ -34,8 +35,9 @@ export function KeyboardContainer(props: PropsWithChildren<Props>) {
     <KeyboardAwareScrollView
       enableOnAndroid
       scrollEnabled={isScrollable}
-      showsVerticalScrollIndicator={false}
+      showsVerticalScrollIndicator={showScrollBar}
       contentContainerStyle={[styles.content, style]}
+      extraScrollHeight={Platform.select({ android: -500 })}
     >
       {children}
     </KeyboardAwareScrollView>

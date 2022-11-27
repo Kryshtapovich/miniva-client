@@ -5,14 +5,24 @@ import { useScreenEnter } from '@utils/hooks';
 
 import { useStyles } from './styles';
 import { FormSelector, FormTextInput } from '@components/form';
+import { useNavigation } from '@react-navigation/native';
+import { useLayoutEffect } from 'react';
 
 function Component() {
+  const { setOptions } = useNavigation();
   const { manufacturersStore } = useStore();
   const { getAll, manufacturers, clear } = manufacturersStore;
 
   const styles = useStyles();
 
   const { control, onSubmit, errors } = useCarForm();
+
+  useLayoutEffect(() => {
+    setOptions({
+      headerTransparent: true,
+      headerStyle: { marginBottom: 16 },
+    });
+  }, []);
 
   useScreenEnter(() => {
     getAll();
@@ -24,8 +34,8 @@ function Component() {
   });
 
   return (
-    <ScreenContainer>
-      <KeyboardContainer scrollEnabled>
+    <ScreenContainer contentStyle={styles.container}>
+      <KeyboardContainer scrollEnabled showScrollBar>
         <FormSelector
           control={control}
           name={'manufacturer'}

@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View, ViewStyle } from 'react-native';
 import { BottomTabHeaderProps } from '@react-navigation/bottom-tabs';
 import { NativeStackHeaderProps } from '@react-navigation/native-stack';
 
@@ -9,12 +9,11 @@ import { useStyles } from './styles';
 type Props = (BottomTabHeaderProps | NativeStackHeaderProps) & { canGoBack: boolean };
 
 export function Header(props: Props) {
-  const { route, canGoBack, navigation } = props;
-
+  const { route, canGoBack, navigation, options } = props;
   const styles = useStyles();
 
   return (
-    <View style={styles.container}>
+    <View style={[styles.container, options.headerStyle as ViewStyle]}>
       <TouchableOpacity
         onPress={navigation.goBack}
         hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
