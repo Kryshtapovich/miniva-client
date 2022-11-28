@@ -1,15 +1,15 @@
 import { setupApi } from 'miniva-common';
 
-import { getToken } from './token';
+import { getUser } from './auth';
 
 export const configureApi = () => {
   setupApi({
     url: 'http://192.168.100.35:8000',
     onRequest: async (config) => {
-      const token = await getToken();
+      const user = await getUser();
       const isAuth = config.url === 'users' || config.url === 'users/login';
-      if (token && config.headers && !isAuth) {
-        config.headers['Authorization'] = `Bearer ${token}`;
+      if (user?.token && config.headers && !isAuth) {
+        config.headers['Authorization'] = `Bearer ${user.token}`;
       }
       return config;
     },

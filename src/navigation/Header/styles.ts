@@ -20,9 +20,6 @@ export const useStyles = withStyles(({ theme, insets, createShadow }) => ({
     left: theme.spacing.m,
     bottom: theme.spacing.m,
   },
-  icon: {
-    color: theme.colors.text,
-  },
   hidden: {
     display: 'none',
   },

@@ -29,7 +29,22 @@ export interface StackRoute extends Route {
   component: Array<TabRoute> | (() => JSX.Element);
 }
 
-export const routes: Array<StackRoute> = [
+export const publicRoutes: Array<StackRoute> = [
+  {
+    name: RouteNames.signIn,
+    headerShown: false,
+    canGoBack: false,
+    component: SignInScreen,
+  },
+  {
+    name: RouteNames.signUp,
+    headerShown: false,
+    canGoBack: false,
+    component: SignUpScreen,
+  },
+];
+
+export const privateRoutes: Array<StackRoute> = [
   {
     name: RouteNames.root,
     headerShown: false,
@@ -64,18 +79,6 @@ export const routes: Array<StackRoute> = [
         icon: { set: 'FontAwesome5', name: 'user-circle' },
       },
     ],
-  },
-  {
-    name: RouteNames.signIn,
-    headerShown: false,
-    canGoBack: false,
-    component: SignInScreen,
-  },
-  {
-    name: RouteNames.signUp,
-    headerShown: false,
-    canGoBack: false,
-    component: SignUpScreen,
   },
   {
     name: RouteNames.car,

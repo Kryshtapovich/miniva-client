@@ -9,4 +9,15 @@ export const useStyles = withStyles(({ theme }) => ({
     borderColor: theme.colors.lightGray,
     borderWidth: 1,
   },
+  iconContainer: {
+    position: 'absolute',
+    right: theme.spacing.m,
+    bottom: 0,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '100%',
+  },
+  hidden: {
+    display: 'none',
+  },
 }));

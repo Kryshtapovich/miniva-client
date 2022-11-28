@@ -1,4 +1,5 @@
 import { TouchableOpacity } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 import { useStore } from 'miniva-common';
 
@@ -11,26 +12,24 @@ import {
   Spacer,
   Typography,
 } from '@components/common';
-import { removeToken } from '@utils/helpers';
+import { RouteNames } from '@navigation';
+import { removeUser } from '@utils/helpers';
 
 import { useStyles } from './styles';
-import { useNavigation } from '@react-navigation/native';
-import { RouteNames } from '@navigation';
 
 export function ProfileScreen() {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { userStore } = useStore();
-  const { signOut } = userStore;
+  const { clear } = userStore;
 
   const goToCarForm = () => {
     navigate(RouteNames.carForm);
   };
 
   const logOut = () => {
-    signOut();
-    removeToken();
-    navigate(RouteNames.signIn);
+    removeUser();
+    clear();
   };
 
   return (

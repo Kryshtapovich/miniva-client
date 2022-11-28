@@ -1,11 +1,34 @@
-import { TextInput as RNTextInput, TextInputProps } from 'react-native';
+import { useState } from 'react';
+import { Pressable, TextInput as RNTextInput, TextInputProps, View } from 'react-native';
 
+import { Icon } from '../Icon';
 import { useStyles } from './styles';
 
-export function TextInput(props: TextInputProps) {
-  const { style, ...rest } = props;
+interface Props extends TextInputProps {
+  password?: boolean;
+}
 
+export function TextInput(props: Props) {
+  const { style, password, ...rest } = props;
+  const [passwordShown, setPasswordShown] = useState(!password);
   const styles = useStyles();
 
-  return <RNTextInput autoCapitalize={'none'} {...rest} style={[styles.container, style]} />;
+  return (
+    <View>
+      <RNTextInput
+        autoCapitalize={'none'}
+        {...rest}
+        style={[styles.container, style]}
+        secureTextEntry={!passwordShown}
+        maxLength={26}
+      />
+      <Pressable
+        hitSlop={20}
+        onPress={setPasswordShown.bind(null, !passwordShown)}
+        style={[styles.iconContainer, !password && styles.hidden]}
+      >
+        <Icon set={'Feather'} name={passwordShown ? 'eye' : 'eye-off'} size={25} />
+      </Pressable>
+    </View>
+  );
 }

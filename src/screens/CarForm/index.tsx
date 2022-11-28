@@ -1,21 +1,39 @@
+import { useLayoutEffect, useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+
 import { observer, useCarForm, useStore } from 'miniva-common';
 
-import { Button, KeyboardContainer, ScreenContainer, Spacer } from '@components/common';
+import {
+  Spacer,
+  Button,
+  ImagePicker,
+  KeyboardContainer,
+  ScreenContainer,
+} from '@components/common';
 import { useScreenEnter } from '@utils/hooks';
 
 import { useStyles } from './styles';
 import { FormSelector, FormTextInput } from '@components/form';
-import { useNavigation } from '@react-navigation/native';
-import { useLayoutEffect } from 'react';
 
 function Component() {
   const { setOptions } = useNavigation();
+  const [photos, setPhotos] = useState<Array<string>>([]);
+
+  const { control, onSubmit, errors, reset } = useCarForm();
+  const styles = useStyles();
+
   const { manufacturersStore } = useStore();
   const { getAll, manufacturers, clear } = manufacturersStore;
 
-  const styles = useStyles();
+  useScreenEnter(() => {
+    getAll();
 
-  const { control, onSubmit, errors } = useCarForm();
+    return () => {
+      clear();
+      reset();
+      setPhotos([]);
+    };
+  }, []);
 
   useLayoutEffect(() => {
     setOptions({
@@ -24,10 +42,14 @@ function Component() {
     });
   }, []);
 
-  useScreenEnter(() => {
-    getAll();
-    return clear;
-  }, []);
+  const addPhoto = (photo: string) => {
+    setPhotos((arr) => [...arr, photo]);
+  };
+
+  const removePhoto = (index: number) => {
+    const newPhotos = photos.filter((_, i) => i !== index);
+    setPhotos(newPhotos);
+  };
 
   const submit = onSubmit((data) => {
     console.log(data);
@@ -74,6 +96,8 @@ function Component() {
           error={errors.price}
           keyboardType={'number-pad'}
         />
+        <Spacer vertical={'s'} />
+        <ImagePicker photos={photos} onAdd={addPhoto} onRemove={removePhoto} />
         <Spacer vertical={'s'} />
         <Button label="Submit" onPress={submit} />
       </KeyboardContainer>

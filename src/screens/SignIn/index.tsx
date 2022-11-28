@@ -4,36 +4,34 @@ import { useNavigation } from '@react-navigation/native';
 import { observer, useSignInForm, useStore } from 'miniva-common';
 
 import { RouteNames } from '@navigation';
-import { Typography, Spacer, Button, KeyboardContainer, ScreenContainer } from '@components/common';
+import { Typography, Spacer, Button, ScreenContainer, KeyboardContainer } from '@components/common';
 import { FormTextInput } from '@components/form';
 
 import { useScreenEnter } from '@utils/hooks';
-import { setToken } from '@utils/helpers';
+import { setUser } from '@utils/helpers';
 
 import { useStyles } from './styles';
 
 function Component() {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { control, errors, onSubmit, reset } = useSignInForm();
+  const { control, errors: formErrors, onSubmit, reset } = useSignInForm();
 
   const { userStore } = useStore();
-  const { signIn, loading } = userStore;
+  const { signIn, loading, errors: storeErrors, clear } = userStore;
 
   useScreenEnter(() => reset, []);
 
   const goToSignUp = () => {
+    clear();
     navigate(RouteNames.signUp);
   };
 
   const submit = onSubmit(async (data) => {
     Keyboard.dismiss();
     const { email, password } = data;
-    const token = await signIn(email, password);
-    if (token) {
-      setToken(token);
-      navigate(RouteNames.root, { screen: RouteNames.cars });
-    }
+    const user = await signIn(email, password).catch(console.log);
+    user && setUser(user);
   });
 
   return (
@@ -43,15 +41,28 @@ function Component() {
         <Typography text="Miniva" style={styles.title} />
         <Spacer vertical={'m'} />
         <View style={styles.form}>
-          <FormTextInput name="email" label="Email" control={control} error={errors.email} />
+          <FormTextInput
+            name="email"
+            label="Email"
+            control={control}
+            error={formErrors.email}
+            keyboardType={'email-address'}
+          />
           <Spacer vertical={'s'} />
           <FormTextInput
+            password
             name="password"
             label="Password"
             control={control}
-            error={errors.password}
+            error={formErrors.password}
           />
-          <Spacer vertical={'l'} />
+          <Spacer vertical={'s'} />
+          <View>
+            {storeErrors?.map((error, i) => (
+              <Typography key={i} text={error} error />
+            ))}
+          </View>
+          <Spacer vertical={'s'} />
           <Button label="Sign In" onPress={submit} loading={loading} />
         </View>
         <Spacer flex />

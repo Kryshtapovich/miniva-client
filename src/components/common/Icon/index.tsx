@@ -14,6 +14,8 @@ import OctIcon from 'react-native-vector-icons/Octicons';
 import SimpleLineIcon from 'react-native-vector-icons/SimpleLineIcons';
 import ZocialIcon from 'react-native-vector-icons/Zocial';
 
+import { useStyles } from './styles';
+
 const iconSets = {
   Entypo: 'Entypo',
   EvilIcons: 'EvilIcons',
@@ -40,36 +42,41 @@ interface Props {
 }
 
 export function Icon(props: Props) {
-  const { set, ...rest } = props;
+  const { set, style, ...rest } = props;
+
+  const styles = useStyles();
+
+  const iconProps = { ...rest, style: [styles.icon, style] };
+
   switch (set) {
     case 'AntDesign':
-      return <AntDesignIcon {...rest} />;
+      return <AntDesignIcon {...iconProps} />;
     case 'Entypo':
-      return <EntypoIcon {...rest} />;
+      return <EntypoIcon {...iconProps} />;
     case 'EvilIcons':
-      return <EvilIcon {...rest} />;
+      return <EvilIcon {...iconProps} />;
     case 'Feather':
-      return <FeatherIcon {...rest} />;
+      return <FeatherIcon {...iconProps} />;
     case 'FontAwesome':
-      return <FontAwesomeIcon {...rest} />;
+      return <FontAwesomeIcon {...iconProps} />;
     case 'FontAwesome5':
-      return <FontAwesome5Icon {...rest} />;
+      return <FontAwesome5Icon {...iconProps} />;
     case 'FontAwesome5Pro':
-      return <FontAwesome5ProIcon {...rest} />;
+      return <FontAwesome5ProIcon {...iconProps} />;
     case 'Foundation':
-      return <FoundationIcon {...rest} />;
+      return <FoundationIcon {...iconProps} />;
     case 'Ionicons':
-      return <IonicIcon {...rest} />;
+      return <IonicIcon {...iconProps} />;
     case 'MaterialIcons':
-      return <MaterialIcon {...rest} />;
+      return <MaterialIcon {...iconProps} />;
     case 'MaterialCommunityIcons':
-      return <MaterialCommunityIcon {...rest} />;
+      return <MaterialCommunityIcon {...iconProps} />;
     case 'Octicons':
-      return <OctIcon {...rest} />;
+      return <OctIcon {...iconProps} />;
     case 'SimpleLineIcons':
-      return <SimpleLineIcon {...rest} />;
+      return <SimpleLineIcon {...iconProps} />;
     case 'Zocial':
-      return <ZocialIcon {...rest} />;
+      return <ZocialIcon {...iconProps} />;
     default:
       return null;
   }

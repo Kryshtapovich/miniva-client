@@ -6,7 +6,7 @@ import { Icon } from '@components/common';
 
 import { TabBar } from './TabBar';
 import { RouteNames, RouteParamList } from './types';
-import { routes, TabRoute } from './config';
+import { privateRoutes, publicRoutes, TabRoute } from './config';
 import { Header } from './Header';
 
 const Stack = createNativeStackNavigator<RouteParamList>();
@@ -19,9 +19,12 @@ interface Props {
 export function Navigator(props: Props) {
   const { isAuthorized } = props;
 
+  const routes = isAuthorized ? privateRoutes : publicRoutes;
+  const initialRoute = isAuthorized ? RouteNames.cars : RouteNames.signIn;
+
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName={isAuthorized ? RouteNames.cars : RouteNames.signIn}>
+      <Stack.Navigator initialRouteName={initialRoute}>
         {routes.map(({ name, component, headerShown, canGoBack }) => (
           <Stack.Screen
             key={name}
@@ -49,7 +52,7 @@ function TabBarWrapper(screens: Array<TabRoute>) {
           options={{
             headerShown,
             header: (props) => <Header {...props} canGoBack={canGoBack} />,
-            tabBarIcon: (props) => <Icon {...icon} {...props} />,
+            tabBarIcon: ({ color, ...rest }) => <Icon {...icon} {...rest} style={{ color }} />,
           }}
         />
       ))}

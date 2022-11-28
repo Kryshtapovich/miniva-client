@@ -19,7 +19,7 @@ export function Header(props: Props) {
         hitSlop={{ top: 5, bottom: 5, left: 5, right: 5 }}
         style={[styles.backButton, !canGoBack && styles.hidden]}
       >
-        <Icon set={'Feather'} name={'chevron-left'} size={25} style={styles.icon} />
+        <Icon set={'Feather'} name={'chevron-left'} size={25} />
       </TouchableOpacity>
       <Typography style={styles.text} text={route.name} />
     </View>

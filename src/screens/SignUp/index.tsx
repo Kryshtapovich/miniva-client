@@ -8,32 +8,30 @@ import { Typography, Spacer, Button, KeyboardContainer, ScreenContainer } from '
 import { FormTextInput } from '@components/form';
 
 import { useScreenEnter } from '@utils/hooks';
-import { setToken } from '@utils/helpers';
+import { setUser } from '@utils/helpers';
 
 import { useStyles } from './styles';
 
 function Component() {
   const styles = useStyles();
   const { navigate } = useNavigation();
-  const { control, errors, onSubmit, reset } = useSignUpForm();
+  const { control, errors: formErrors, onSubmit, reset } = useSignUpForm();
 
   const { userStore } = useStore();
-  const { signUp, loading } = userStore;
+  const { signUp, loading, errors: storeErrors, clear } = userStore;
 
   useScreenEnter(() => reset, []);
 
   const goToSignIn = () => {
+    clear();
     navigate(RouteNames.signIn);
   };
 
   const submit = onSubmit(async (data) => {
     Keyboard.dismiss();
     const { username, email, password } = data;
-    const token = await signUp(username, email, password);
-    if (token) {
-      setToken(token);
-      navigate(RouteNames.root, { screen: RouteNames.cars });
-    }
+    const user = await signUp(username, email, password);
+    user && setUser(user);
   });
 
   return (
@@ -47,18 +45,31 @@ function Component() {
             name="username"
             label="Username"
             control={control}
-            error={errors.username}
+            error={formErrors.username}
           />
           <Spacer vertical={'s'} />
-          <FormTextInput name="email" label="Email" control={control} error={errors.email} />
+          <FormTextInput
+            name="email"
+            label="Email"
+            control={control}
+            error={formErrors.email}
+            keyboardType={'email-address'}
+          />
           <Spacer vertical={'s'} />
           <FormTextInput
+            password
             name="password"
             label="Password"
             control={control}
-            error={errors.password}
+            error={formErrors.password}
           />
-          <Spacer vertical={'l'} />
+          <Spacer vertical={'s'} />
+          <View>
+            {storeErrors?.map((error, i) => (
+              <Typography key={i} text={error} error />
+            ))}
+          </View>
+          <Spacer vertical={'s'} />
           <Button label="Sign Up" onPress={submit} loading={loading} />
         </View>
         <Spacer flex />

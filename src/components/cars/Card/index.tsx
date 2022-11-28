@@ -23,7 +23,7 @@ function Component(props: Props) {
   const styles = useStyles();
 
   const renderImage = ({ item }: { item: string }) => {
-    return <Image uri={'data:image/png;base64,' + item} style={styles.image as ImageStyle} />;
+    return <Image uri={item} style={styles.image as ImageStyle} />;
   };
 
   const renderSeparator = () => {

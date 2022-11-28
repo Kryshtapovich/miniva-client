@@ -35,7 +35,8 @@ export function KeyboardContainer(props: PropsWithChildren<Props>) {
     <KeyboardAwareScrollView
       enableOnAndroid
       scrollEnabled={isScrollable}
-      showsVerticalScrollIndicator={showScrollBar}
+      keyboardShouldPersistTaps="handled"
+      showsVerticalScrollIndicator={!!showScrollBar}
       contentContainerStyle={[styles.content, style]}
       extraScrollHeight={Platform.select({ android: -500 })}
     >
