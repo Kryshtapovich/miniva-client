@@ -1,3 +1,4 @@
+import { ActivityIndicator, View } from 'react-native';
 import { useRoute } from '@react-navigation/native';
 
 import { observer, useStore } from 'miniva-common';
@@ -7,6 +8,7 @@ import { ScreenContainer } from '@components/common';
 import { useScreenEnter } from '@utils/hooks';
 
 import { useStyles } from './styles';
+import { theme } from '@utils/constants';
 
 function Component() {
   const { name } = useRoute();
@@ -22,7 +24,13 @@ function Component() {
 
   return (
     <ScreenContainer contentStyle={styles.content}>
-      {!loading && <CarList cars={cars} toggleFavorite={Promise.resolve} />}
+      {loading ? (
+        <View style={styles.loader}>
+          <ActivityIndicator size={30} color={theme.colors.orange} />
+        </View>
+      ) : (
+        <CarList cars={cars} toggleFavorite={Promise.resolve} />
+      )}
     </ScreenContainer>
   );
 }

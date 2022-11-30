@@ -6,6 +6,7 @@ export const useStyles = withStyles(({ theme }) => ({
     borderRadius: theme.radius.m,
     padding: theme.spacing.m,
     fontSize: theme.font.size.m,
+    color: theme.colors.text,
     borderColor: theme.colors.lightGray,
     borderWidth: 1,
   },
