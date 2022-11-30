@@ -3,26 +3,24 @@ import { useNavigation } from '@react-navigation/native';
 
 import { observer, useCarForm, useStore } from 'miniva-common';
 
-import {
-  Spacer,
-  Button,
-  ImagePicker,
-  KeyboardContainer,
-  ScreenContainer,
-} from '@components/common';
+import { Spacer, Button, KeyboardContainer, ScreenContainer } from '@components/common';
+import { FormImagePicker, FormSelector, FormTextInput } from '@components/form';
 import { useScreenEnter } from '@utils/hooks';
+import { showMessage } from '@utils/helpers';
 
 import { useStyles } from './styles';
-import { FormSelector, FormTextInput } from '@components/form';
 
 function Component() {
   const { setOptions } = useNavigation();
-  const [photos, setPhotos] = useState<Array<string>>([]);
 
   const { control, onSubmit, errors, reset } = useCarForm();
   const styles = useStyles();
 
-  const { manufacturersStore } = useStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const { goBack } = useNavigation();
+
+  const { carsStore, manufacturersStore } = useStore();
+  const { createCar } = carsStore;
   const { getAll, manufacturers, clear } = manufacturersStore;
 
   useScreenEnter(() => {
@@ -31,28 +29,27 @@ function Component() {
     return () => {
       clear();
       reset();
-      setPhotos([]);
     };
   }, []);
 
   useLayoutEffect(() => {
     setOptions({
       headerTransparent: true,
-      headerStyle: { marginBottom: 16 },
+      headerStyle: styles.header,
     });
   }, []);
 
-  const addPhoto = (photo: string) => {
-    setPhotos((arr) => [...arr, photo]);
-  };
-
-  const removePhoto = (index: number) => {
-    const newPhotos = photos.filter((_, i) => i !== index);
-    setPhotos(newPhotos);
-  };
-
-  const submit = onSubmit((data) => {
-    console.log(data);
+  const submit = onSubmit(async (data) => {
+    setIsLoading(true);
+    try {
+      await createCar(data);
+      showMessage({ type: 'success', message: 'Car has been successfully createed' });
+      goBack();
+    } catch {
+      showMessage({ type: 'error', message: 'An error occured while creating car' });
+    } finally {
+      setIsLoading(false);
+    }
   });
 
   return (
@@ -97,9 +94,9 @@ function Component() {
           keyboardType={'number-pad'}
         />
         <Spacer vertical={'s'} />
-        <ImagePicker photos={photos} onAdd={addPhoto} onRemove={removePhoto} />
+        <FormImagePicker control={control} name={'car_photos'} error={errors.car_photos} />
         <Spacer vertical={'s'} />
-        <Button label="Submit" onPress={submit} />
+        <Button label="Submit" onPress={submit} loading={isLoading} />
       </KeyboardContainer>
     </ScreenContainer>
   );

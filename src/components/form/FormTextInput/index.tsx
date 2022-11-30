@@ -5,6 +5,7 @@ import { FormField } from 'miniva-common';
 
 import { Spacer, TextInput, Typography } from '@components/common';
 
+import { ErrorText } from '../ErrorText';
 import { FormComponentProps, FormFieldProps } from '../types';
 import { useStyles } from './styles';
 
@@ -15,7 +16,7 @@ export function FormTextInput(props: Props) {
 
   const styles = useStyles();
 
-  const renderInput = (field: Parameters<FormFieldProps['render']>[0]) => {
+  const renderField = (field: Parameters<FormFieldProps['render']>[0]) => {
     const { value, onBlur, onChange } = field;
 
     return (
@@ -37,8 +38,8 @@ export function FormTextInput(props: Props) {
           <Spacer vertical={'xs'} />
         </>
       )}
-      <FormField name={name} control={control} render={renderInput} />
-      {!!error && <Typography error={!!error} text={error} style={styles.errorText} />}
+      <FormField name={name} control={control} render={renderField} />
+      <ErrorText error={error} />
     </View>
   );
 }

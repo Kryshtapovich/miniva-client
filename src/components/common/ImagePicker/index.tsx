@@ -18,7 +18,7 @@ import { useStyles } from './styles';
 interface Props {
   limit?: number;
   photos: Array<string>;
-  onAdd: (photo: string) => void;
+  onAdd: (photos: Array<string>) => void;
   onRemove: (index: number) => void;
 }
 
@@ -32,15 +32,19 @@ export function ImagePicker(props: Props) {
   const togglePhotos = async (
     callback: (options: ImageLibraryOptions) => Promise<ImagePickerResponse>,
   ) => {
-    const { assets } = await callback({
-      mediaType: 'photo',
-      includeBase64: true,
-    });
     setIsModalOpen(false);
-    if (assets) {
-      const { base64 } = assets[0];
-      onAdd('data:image/png;base64,' + base64);
-    }
+    setTimeout(async () => {
+      const { assets } = await callback({
+        mediaType: 'photo',
+        includeBase64: true,
+        selectionLimit: 0,
+        quality: 0.1,
+      });
+      if (assets) {
+        const data = assets.map(({ base64 }) => 'data:image/png;base64,' + base64);
+        onAdd(data);
+      }
+    }, 400);
   };
 
   const renderItem = ({ item, index }: { item: string; index: number }) => {
