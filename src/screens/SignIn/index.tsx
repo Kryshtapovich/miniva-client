@@ -30,7 +30,7 @@ function Component() {
   const submit = onSubmit(async (data) => {
     Keyboard.dismiss();
     const { email, password } = data;
-    const user = await signIn(email, password).catch(console.log);
+    const user = await signIn(email, password);
     user && setUser(user);
   });
 

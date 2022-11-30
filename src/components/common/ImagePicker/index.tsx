@@ -38,7 +38,7 @@ export function ImagePicker(props: Props) {
         mediaType: 'photo',
         includeBase64: true,
         selectionLimit: 0,
-        quality: 0.1,
+        quality: 0.5,
       });
       if (assets) {
         const data = assets.map(({ base64 }) => 'data:image/png;base64,' + base64);

@@ -6,9 +6,9 @@ import { observer, useStore } from 'miniva-common';
 import { CarList } from '@components/cars';
 import { ScreenContainer } from '@components/common';
 import { useScreenEnter } from '@utils/hooks';
+import { theme } from '@utils/constants';
 
 import { useStyles } from './styles';
-import { theme } from '@utils/constants';
 
 function Component() {
   const { name } = useRoute();
@@ -18,7 +18,7 @@ function Component() {
   const styles = useStyles();
 
   useScreenEnter(() => {
-    getAll();
+    getAll(true);
     return clear;
   }, [name]);
 
@@ -29,7 +29,7 @@ function Component() {
           <ActivityIndicator size={30} color={theme.colors.orange} />
         </View>
       ) : (
-        <CarList cars={cars} toggleFavorite={Promise.resolve} />
+        <CarList cars={cars} toggleFavorite={Promise.resolve} onRefresh={getAll} />
       )}
     </ScreenContainer>
   );

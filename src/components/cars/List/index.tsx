@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { FlashList } from '@shopify/flash-list';
 
 import { Car } from 'miniva-common';
@@ -9,13 +10,24 @@ import { useStyles } from './styles';
 
 interface Props {
   cars: Array<Car>;
+  onRefresh: () => Promise<void>;
   toggleFavorite: (carId: number) => Promise<void>;
 }
 
 export function CarList(props: Props) {
-  const { cars, toggleFavorite } = props;
+  const { cars, toggleFavorite, onRefresh } = props;
+  const [isRefreshing, setIsRefreshing] = useState(false);
 
   const styles = useStyles();
+
+  const refresh = async () => {
+    setIsRefreshing(true);
+    try {
+      await onRefresh();
+    } finally {
+      setIsRefreshing(false);
+    }
+  };
 
   const getCar = ({ item }: { item: Car }) => {
     return <CarCard car={item} style={styles.item} toggleFavorite={toggleFavorite} />;
@@ -33,7 +45,9 @@ export function CarList(props: Props) {
     <FlashList
       data={cars}
       renderItem={getCar}
+      onRefresh={refresh}
       estimatedItemSize={500}
+      refreshing={isRefreshing}
       keyExtractor={getExtractor}
       showsVerticalScrollIndicator={false}
       ListHeaderComponent={getSeparator}
