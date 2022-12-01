@@ -4094,7 +4094,7 @@ minimist@^1.2.0, minimist@^1.2.6:
 
 "miniva-common@https://github.com/miniva-cars/miniva-common":
   version "1.0.0"
-  resolved "https://github.com/miniva-cars/miniva-common#ef79867e8b60ac1d41c3398f37b20766cf3af419"
+  resolved "https://github.com/miniva-cars/miniva-common#331fbed4515586a4af7f9cd525a676d7669b9165"
   dependencies:
     "@hookform/resolvers" "^2.9.10"
     axios "0.27.2"
