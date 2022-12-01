@@ -10,4 +10,5 @@ export { TextInput } from './TextInput';
 export { Typography } from './Typography';
 export { ImagePicker } from './ImagePicker';
 export { ScreenContainer } from './ScreenContainer';
+export { EmptyPlaceholder } from './EmptyPlaceholder';
 export { KeyboardContainer } from './KeyboardContainer';

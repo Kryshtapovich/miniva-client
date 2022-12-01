@@ -3,7 +3,7 @@ import { FlashList } from '@shopify/flash-list';
 
 import { Car } from 'miniva-common';
 
-import { Spacer } from '@components/common';
+import { EmptyPlaceholder, Spacer } from '@components/common';
 
 import { CarCard } from '../Card';
 import { useStyles } from './styles';
@@ -37,6 +37,16 @@ export function CarList(props: Props) {
     return <Spacer vertical={'s'} />;
   };
 
+  const getEmptyComponent = () => {
+    return (
+      <EmptyPlaceholder
+        text="No cars found"
+        icon={{ set: 'Ionicons', name: 'car-sport' }}
+        style={styles.placeholder}
+      />
+    );
+  };
+
   const getExtractor = ({ id }: Car) => {
     return id.toString();
   };
@@ -53,6 +63,7 @@ export function CarList(props: Props) {
       ListHeaderComponent={getSeparator}
       ListFooterComponent={getSeparator}
       ItemSeparatorComponent={getSeparator}
+      ListEmptyComponent={getEmptyComponent}
     />
   );
 }
