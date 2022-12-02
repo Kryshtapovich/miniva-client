@@ -17,9 +17,10 @@ export function Modal(props: PropsWithChildren<Props>) {
 
   return (
     <RNModal
+      hasBackdrop
+      statusBarTranslucent
       isVisible={isVisbile}
       swipeDirection={'down'}
-      hasBackdrop
       onBackdropPress={onClose}
       onSwipeComplete={onClose}
       style={styles.container}

@@ -26,7 +26,7 @@ function Component() {
     <ScreenContainer contentStyle={styles.content}>
       {loading ? (
         <View style={styles.loader}>
-          <ActivityIndicator size={30} color={theme.colors.orange} />
+          <ActivityIndicator size={'large'} color={theme.colors.orange} />
         </View>
       ) : (
         <CarList cars={cars} toggleFavorite={Promise.resolve} onRefresh={getAll} />

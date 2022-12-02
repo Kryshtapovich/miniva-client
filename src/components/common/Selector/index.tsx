@@ -27,9 +27,11 @@ export function Selector(props: Props) {
 
   return (
     <Select
-      onValueChange={onValueChange}
       items={options}
+      Icon={renderIcon}
+      onValueChange={onValueChange}
       useNativeAndroidPickerStyle={false}
+      placeholder={{ inputLabel: '', value: 0 }}
       style={{
         inputIOS: { ...styles.container, ...style?.inputIOS },
         inputAndroid: { ...styles.container, ...style?.inputAndroid },
@@ -40,7 +42,6 @@ export function Selector(props: Props) {
           alignItems: 'center',
         },
       }}
-      Icon={renderIcon}
     />
   );
 }

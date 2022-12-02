@@ -1,9 +1,11 @@
 import { useState } from 'react';
+import { RefreshControl } from 'react-native';
 import { FlashList } from '@shopify/flash-list';
 
 import { Car } from 'miniva-common';
 
 import { EmptyPlaceholder, Spacer } from '@components/common';
+import { theme } from '@utils/constants';
 
 import { CarCard } from '../Card';
 import { useStyles } from './styles';
@@ -51,6 +53,16 @@ export function CarList(props: Props) {
     return id.toString();
   };
 
+  const getRefreshControl = () => {
+    return (
+      <RefreshControl
+        refreshing={isRefreshing}
+        colors={[theme.colors.orange]}
+        tintColor={theme.colors.orange}
+      />
+    );
+  };
+
   return (
     <FlashList
       data={cars}
@@ -59,9 +71,10 @@ export function CarList(props: Props) {
       estimatedItemSize={500}
       refreshing={isRefreshing}
       keyExtractor={getExtractor}
-      showsVerticalScrollIndicator={false}
       ListHeaderComponent={getSeparator}
       ListFooterComponent={getSeparator}
+      refreshControl={getRefreshControl()}
+      showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={getSeparator}
       ListEmptyComponent={getEmptyComponent}
     />

@@ -1,9 +1,13 @@
-import { withStyles } from '@utils/hooks';
 import { Platform } from 'react-native';
 
-export const useStyles = withStyles(({ theme }) => ({
+import { withStyles } from '@utils/hooks';
+
+export const useStyles = withStyles(({ theme, insets }) => ({
   container: {
-    paddingTop: Platform.select({ ios: 60, android: 75 }),
+    flex: 1,
+    marginTop: Platform.select({ ios: 68, android: 40 }),
+    paddingHorizontal: theme.spacing.m,
+    paddingBottom: insets.bottom || theme.spacing.m,
   },
   header: {
     marginBottom: theme.spacing.m,

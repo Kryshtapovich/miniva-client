@@ -1,0 +1,52 @@
+import { Car } from 'miniva-common';
+import { KeyboardTypeOptions } from 'react-native';
+
+export interface Field {
+  name: keyof Car;
+  label?: string;
+  keyboardType?: KeyboardTypeOptions;
+}
+
+export const fields: Array<Field> = [
+  {
+    name: 'manufacturer',
+    label: 'Manufacturer',
+  },
+  {
+    name: 'model',
+    label: 'Model',
+    keyboardType: 'default',
+  },
+  {
+    name: 'color',
+    label: 'Color',
+    keyboardType: 'default',
+  },
+  {
+    name: 'vin',
+    label: 'VIN',
+    keyboardType: 'default',
+  },
+  {
+    name: 'hp',
+    label: 'Power',
+    keyboardType: 'number-pad',
+  },
+  {
+    name: 'engine',
+    label: 'Engine (liters)',
+  },
+  {
+    name: 'carcase',
+    label: 'Carcase',
+    keyboardType: 'default',
+  },
+  {
+    name: 'price',
+    label: 'Price ($)',
+    keyboardType: 'numeric',
+  },
+  {
+    name: 'car_photos',
+  },
+];
