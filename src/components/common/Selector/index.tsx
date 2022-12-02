@@ -31,7 +31,7 @@ export function Selector(props: Props) {
       Icon={renderIcon}
       onValueChange={onValueChange}
       useNativeAndroidPickerStyle={false}
-      placeholder={{ inputLabel: '', value: 0 }}
+      placeholder={{ label: ' ', value: '' }}
       style={{
         inputIOS: { ...styles.container, ...style?.inputIOS },
         inputAndroid: { ...styles.container, ...style?.inputAndroid },
