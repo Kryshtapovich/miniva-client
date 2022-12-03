@@ -53,27 +53,22 @@ export function CarList(props: Props) {
     return id.toString();
   };
 
-  const getRefreshControl = () => {
-    return (
-      <RefreshControl
-        refreshing={isRefreshing}
-        colors={[theme.colors.orange]}
-        tintColor={theme.colors.orange}
-      />
-    );
-  };
-
   return (
     <FlashList
       data={cars}
       renderItem={getCar}
-      onRefresh={refresh}
       estimatedItemSize={500}
-      refreshing={isRefreshing}
       keyExtractor={getExtractor}
       ListHeaderComponent={getSeparator}
       ListFooterComponent={getSeparator}
-      refreshControl={getRefreshControl()}
+      refreshControl={
+        <RefreshControl
+          onRefresh={refresh}
+          refreshing={isRefreshing}
+          colors={[theme.colors.orange]}
+          tintColor={theme.colors.orange}
+        />
+      }
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={getSeparator}
       ListEmptyComponent={getEmptyComponent}

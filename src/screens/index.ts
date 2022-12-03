@@ -6,3 +6,5 @@ export { ProfileScreen } from './Profile';
 export { SignInScreen } from './SignIn';
 export { SignUpScreen } from './SignUp';
 export { CarFormScreen } from './CarForm';
+export { FavoritesScreen } from './Favorites';
+export { CarFilterScreen } from './CarFilter';

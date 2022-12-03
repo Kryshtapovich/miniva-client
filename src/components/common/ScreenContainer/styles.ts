@@ -6,6 +6,8 @@ export const useStyles = withStyles(({ theme }) => ({
   },
   content: {
     flex: 1,
+  },
+  paddings: {
     padding: theme.spacing.m,
   },
 }));

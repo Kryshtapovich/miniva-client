@@ -10,6 +10,8 @@ import {
   SignInScreen,
   SignUpScreen,
   CarFormScreen,
+  CarFilterScreen,
+  FavoritesScreen,
 } from '@screens';
 
 import { RouteNames } from './types';
@@ -61,7 +63,7 @@ export const privateRoutes: Array<StackRoute> = [
         name: RouteNames.favorites,
         headerShown: true,
         canGoBack: false,
-        component: CarsScreen,
+        component: FavoritesScreen,
         icon: { set: 'FontAwesome', name: 'star' },
       },
       {
@@ -97,5 +99,11 @@ export const privateRoutes: Array<StackRoute> = [
     headerShown: true,
     canGoBack: true,
     component: CarFormScreen,
+  },
+  {
+    name: RouteNames.carFilter,
+    headerShown: false,
+    canGoBack: false,
+    component: CarFilterScreen,
   },
 ];

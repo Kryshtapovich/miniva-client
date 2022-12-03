@@ -1,12 +1,18 @@
 import { withStyles } from '@utils/hooks';
 
-export const useStyles = withStyles(() => ({
-  content: {
-    padding: 0,
-  },
-  loader: {
+export const useStyles = withStyles(({ theme }) => ({
+  spinner: {
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  button: {
+    position: 'absolute',
+    left: '25%',
+    right: '25%',
+    bottom: theme.spacing.m,
+  },
+  hidden: {
+    display: 'none',
   },
 }));

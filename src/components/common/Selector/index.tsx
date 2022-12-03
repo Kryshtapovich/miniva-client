@@ -5,13 +5,14 @@ import { Icon } from '../Icon';
 import { useStyles } from './styles';
 
 interface Props {
+  placeholder?: string;
   onChange: (value: number) => void;
   options: Array<{ label: string; value: number }>;
   style?: PickerStyle & { icon: StyleProp<TextStyle> };
 }
 
 export function Selector(props: Props) {
-  const { onChange, options, style } = props;
+  const { onChange, options, style, placeholder } = props;
 
   const styles = useStyles();
 
@@ -31,7 +32,7 @@ export function Selector(props: Props) {
       Icon={renderIcon}
       onValueChange={onValueChange}
       useNativeAndroidPickerStyle={false}
-      placeholder={{ label: ' ', value: '' }}
+      placeholder={{ label: placeholder || ' ', value: '' }}
       style={{
         inputIOS: { ...styles.container, ...style?.inputIOS },
         inputAndroid: { ...styles.container, ...style?.inputAndroid },

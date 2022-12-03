@@ -7,6 +7,7 @@ export { Button } from './Button';
 export { Divider } from './Divider';
 export { Selector } from './Selector';
 export { TextInput } from './TextInput';
+export { IconButton } from './IconButton';
 export { Typography } from './Typography';
 export { ImagePicker } from './ImagePicker';
 export { ScreenContainer } from './ScreenContainer';

@@ -9,12 +9,10 @@ import { ErrorText } from '../ErrorText';
 import { FormComponentProps, FormFieldProps } from '../types';
 import { useStyles } from './styles';
 
-interface Props extends FormComponentProps {
-  options: ComponentProps<typeof Selector>['options'];
-}
+type Props = FormComponentProps & Pick<ComponentProps<typeof Selector>, 'options' | 'placeholder'>;
 
 export function FormSelector(props: Props) {
-  const { name, label, error, control, options } = props;
+  const { name, label, error, control, ...rest } = props;
 
   const styles = useStyles();
 
@@ -23,7 +21,7 @@ export function FormSelector(props: Props) {
 
     return (
       <Selector
-        options={options}
+        {...rest}
         onChange={onChange}
         style={{
           inputIOS: error ? styles.error : undefined,

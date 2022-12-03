@@ -19,6 +19,7 @@ export enum RouteNames {
   chat = 'Chat',
   profile = 'Profile',
   carForm = 'Create Post',
+  carFilter = 'Car Filter',
 }
 
 export type RouteParams<T extends keyof RouteParamList> = RouteProp<RouteParamList, T>;
