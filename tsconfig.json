@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "esnext",
-    "types": ["react-native"],
+    "types": ["node", "react-native"],
     "lib": ["ESNext"],
     "allowJs": true,
     "jsx": "react-native",
