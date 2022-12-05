@@ -1,11 +1,13 @@
 import { memo } from 'react';
-import { StyleProp, View, ViewStyle } from 'react-native';
+import { Pressable, StyleProp, View, ViewStyle } from 'react-native';
 import { ImageStyle } from 'react-native-fast-image';
+import { useNavigation } from '@react-navigation/native';
 
 import { FlashList } from '@shopify/flash-list';
 
 import { Car } from 'miniva-common';
 
+import { RouteNames } from '@navigation';
 import { Image, Paper, Spacer, Typography } from '@components/common';
 
 import { useStyles } from './styles';
@@ -18,20 +20,30 @@ interface Props {
 
 function Component(props: Props) {
   const { car, style } = props;
-  const { model, price, car_photos } = car;
+  const { id, model, price, car_photos } = car;
+
+  const { navigate } = useNavigation();
 
   const styles = useStyles();
 
+  const showDetails = () => {
+    navigate(RouteNames.car, { carId: id });
+  };
+
   const renderImage = ({ item }: { item: string }) => {
-    return <Image uri={item} style={styles.image as ImageStyle} />;
+    return (
+      <Pressable onPress={showDetails}>
+        <Image uri={item} style={styles.image as ImageStyle} />
+      </Pressable>
+    );
   };
 
   const renderSeparator = () => {
-    return <Spacer horizontal={'s'} />;
+    return <Spacer horizontal={'xs'} />;
   };
 
   return (
-    <Paper style={style}>
+    <Paper style={style} onPress={showDetails}>
       <View style={styles.spacedRow}>
         <View style={styles.title}>
           <Spacer horizontal={'xs'} />

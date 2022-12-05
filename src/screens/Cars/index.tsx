@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
-import { ActivityIndicator } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { observer, useStore } from 'miniva-common';
 
 import { RouteNames } from '@navigation';
 import { CarList } from '@components/cars';
-import { IconButton, ScreenContainer } from '@components/common';
-import { theme } from '@utils/constants';
+import { Button, ScreenContainer, Spinner } from '@components/common';
 
 import { useStyles } from './styles';
 
@@ -27,15 +25,13 @@ function Component() {
     navigate(RouteNames.carFilter);
   };
 
+  if (loading) return <Spinner />;
+
   return (
     <ScreenContainer disablePaddings>
-      {loading ? (
-        <ActivityIndicator size={'large'} color={theme.colors.orange} style={styles.spinner} />
-      ) : (
-        <CarList cars={cars} toggleFavorite={Promise.resolve} onRefresh={getAll} />
-      )}
+      <CarList cars={cars} toggleFavorite={Promise.resolve} onRefresh={getAll} />
       {!!cars.length && (
-        <IconButton
+        <Button
           label="Filters"
           onPress={goToFilter}
           icon={{ set: 'Feather', name: 'filter' }}

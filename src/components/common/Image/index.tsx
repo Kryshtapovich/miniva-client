@@ -1,14 +1,17 @@
 import { useState } from 'react';
-import { StyleProp } from 'react-native';
+import { StyleProp, Dimensions } from 'react-native';
 import FastImage, { OnLoadEvent, ImageStyle } from 'react-native-fast-image';
 
 interface Props {
   uri: string;
+  fitScreen?: boolean;
   style?: StyleProp<ImageStyle>;
 }
 
+const screenWidth = Dimensions.get('screen').width;
+
 export function Image(props: Props) {
-  const { uri, style } = props;
+  const { uri, style, fitScreen } = props;
   const [aspectRatio, setAspectRatio] = useState(1);
 
   const onLoad = ({ nativeEvent }: OnLoadEvent) => {
@@ -20,8 +23,8 @@ export function Image(props: Props) {
     <FastImage
       onLoad={onLoad}
       source={{ uri }}
-      style={[{ aspectRatio }, style]}
-      resizeMode={FastImage.resizeMode.contain}
+      style={[fitScreen ? { width: screenWidth } : { aspectRatio }, style]}
+      resizeMode={FastImage.resizeMode[fitScreen ? 'stretch' : 'contain']}
     />
   );
 }

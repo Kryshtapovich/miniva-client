@@ -8,6 +8,12 @@ export const useStyles = withStyles(({ theme }) => ({
     alignItems: 'center',
     borderRadius: theme.radius.m,
   },
+  withIcon: {
+    flexDirection: 'row',
+  },
+  icon: {
+    color: theme.colors.white,
+  },
   label: {
     color: theme.colors.white,
   },

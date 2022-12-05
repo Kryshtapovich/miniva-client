@@ -1,11 +1,10 @@
-import { Pressable, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { View } from 'react-native';
 
 import { useCarForm } from 'miniva-common';
 
 import {
   Button,
-  Icon,
+  IconButton,
   KeyboardContainer,
   ScreenContainer,
   Spacer,
@@ -14,21 +13,20 @@ import {
 import { FormSelector, FormTextInput } from '@components/form';
 
 import { useStyles } from './styles';
+import { useNavigation } from '@react-navigation/native';
 
 export function CarFilterScreen() {
   const styles = useStyles();
 
-  const { control } = useCarForm();
-
   const { goBack } = useNavigation();
+
+  const { control } = useCarForm();
 
   return (
     <ScreenContainer>
       <KeyboardContainer>
         <View style={styles.header}>
-          <Pressable style={styles.backButton} onPress={goBack}>
-            <Icon set={'Feather'} name={'chevron-left'} size={25} />
-          </Pressable>
+          <IconButton icon={{ set: 'Feather', name: 'chevron-left', size: 25 }} onPress={goBack} />
           <Typography text="Reset all" onPress={Promise.resolve} style={styles.resetText} />
         </View>
         <Spacer vertical={'s'} />

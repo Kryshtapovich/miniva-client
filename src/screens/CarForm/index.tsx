@@ -1,4 +1,4 @@
-import { useLayoutEffect, useState } from 'react';
+import { useEffect, useLayoutEffect, useState } from 'react';
 import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
@@ -7,7 +7,6 @@ import { observer, useCarForm, useStore } from 'miniva-common';
 
 import { Spacer, Button } from '@components/common';
 import { FormImagePicker, FormSelector, FormTextInput } from '@components/form';
-import { useScreenEnter } from '@utils/hooks';
 import { showMessage } from '@utils/helpers';
 
 import { Field, fields } from './config';
@@ -31,7 +30,7 @@ function Component() {
   const { createCar } = carsStore;
   const { getAll, manufacturers, clear } = manufacturersStore;
 
-  useScreenEnter(() => {
+  useEffect(() => {
     getAll();
 
     return () => {

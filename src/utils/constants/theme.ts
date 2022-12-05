@@ -23,6 +23,7 @@ export const theme = {
     m: 16,
     l: 24,
     xl: 32,
+    xxl: 40,
   },
   radius: {
     xs: 2,

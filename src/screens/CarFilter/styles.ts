@@ -9,14 +9,6 @@ export const useStyles = withStyles(({ theme }) => ({
   resetText: {
     color: theme.colors.gray,
   },
-  backButton: {
-    backgroundColor: theme.colors.white,
-    justifyContent: 'center',
-    alignItems: 'center',
-    aspectRatio: 1,
-    width: 45,
-    borderRadius: 30,
-  },
   row: {
     flexDirection: 'row',
   },
