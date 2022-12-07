@@ -20,7 +20,7 @@ function Component() {
   useLayoutEffect(() => {
     getUser()
       .then(init)
-      .then(() => SplashScreen.hide());
+      .then(() => SplashScreen?.hide());
   }, []);
 
   return (

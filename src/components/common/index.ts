@@ -1,6 +1,6 @@
 export { Icon } from './Icon';
 export { Paper } from './Paper';
-export { Image } from './Image';
+export { Image } from './Image/index.web';
 export { Modal } from './Modal';
 export { Spacer } from './Spacer';
 export { Button } from './Button';

@@ -28,7 +28,7 @@ function Component() {
   if (loading) return <Spinner />;
 
   return (
-    <ScreenContainer disablePaddings>
+    <ScreenContainer disablePaddings containerStyle={styles.container}>
       <CarList cars={cars} toggleFavorite={Promise.resolve} onRefresh={getAll} />
       {!!cars.length && (
         <Button

@@ -9,7 +9,7 @@ import {
 import { FlashList } from '@shopify/flash-list';
 
 import { Icon } from '../Icon';
-import { Image } from '../Image';
+import { Image } from '../Image/index.web';
 import { Spacer } from '../Spacer';
 import { Button } from '../Button';
 import { Modal } from '../Modal';

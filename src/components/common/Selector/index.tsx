@@ -29,19 +29,15 @@ export function Selector(props: Props) {
   return (
     <Select
       items={options}
-      Icon={renderIcon}
+      Icon={renderIcon as any}
       onValueChange={onValueChange}
       useNativeAndroidPickerStyle={false}
       placeholder={{ label: placeholder || ' ', value: '' }}
       style={{
         inputIOS: { ...styles.container, ...style?.inputIOS },
         inputAndroid: { ...styles.container, ...style?.inputAndroid },
-        iconContainer: {
-          ...styles.iconContainer,
-          ...style?.iconContainer,
-          justifyContent: 'center',
-          alignItems: 'center',
-        },
+        inputWeb: { ...styles.container, ...styles.inputWeb, ...style?.inputWeb },
+        iconContainer: { ...styles.iconContainer, ...style?.iconContainer },
       }}
     />
   );

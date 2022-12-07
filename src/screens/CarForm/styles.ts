@@ -9,5 +9,6 @@ export const useStyles = withStyles(({ theme, insets }) => ({
   },
   header: {
     marginBottom: theme.spacing.m,
+    marginLeft: 0,
   },
 }));

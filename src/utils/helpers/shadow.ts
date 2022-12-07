@@ -18,5 +18,8 @@ export const createShadow = ({ width, height, elevation }: Params) => {
     android: {
       elevation,
     },
+    web: {
+      boxShadow: `${width}px ${height}px 10px ${theme.colors.gray}`,
+    },
   });
 };

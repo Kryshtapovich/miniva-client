@@ -14,7 +14,8 @@ import {
   FavoritesScreen,
 } from '@screens';
 
-import { RouteNames } from './types';
+import { RouteNames, RouteParamList } from './types';
+import { LinkingOptions } from '@react-navigation/native';
 
 interface Route {
   name: RouteNames;
@@ -107,3 +108,25 @@ export const privateRoutes: Array<StackRoute> = [
     component: CarFilterScreen,
   },
 ];
+
+export const linking: LinkingOptions<RouteParamList> = {
+  config: {
+    screens: {
+      [RouteNames.root]: {
+        screens: {
+          [RouteNames.cars]: 'cars',
+          [RouteNames.favorites]: 'favorites',
+          [RouteNames.chats]: 'chats',
+          [RouteNames.profile]: 'profile',
+        },
+      } as any,
+      [RouteNames.signIn]: 'sign-in',
+      [RouteNames.signUp]: 'sign-up',
+      [RouteNames.carForm]: 'car-form',
+      [RouteNames.carFilter]: 'filter',
+      [RouteNames.car]: 'car/:carId',
+    },
+  },
+
+  prefixes: ['miniva://', 'http://'],
+};

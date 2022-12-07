@@ -1,3 +1,5 @@
+import { TextStyle } from 'react-native';
+
 import { withStyles } from '@utils/hooks';
 
 export const useStyles = withStyles(({ theme }) => ({
@@ -14,8 +16,15 @@ export const useStyles = withStyles(({ theme }) => ({
     top: theme.spacing.m,
     bottom: theme.spacing.m,
     right: theme.spacing.s,
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   icon: {
+    width: 25,
+    height: 25,
     color: theme.colors.gray,
   },
+  inputWeb: {
+    appearance: 'none',
+  } as TextStyle,
 }));

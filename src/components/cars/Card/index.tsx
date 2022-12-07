@@ -1,6 +1,5 @@
 import { memo } from 'react';
-import { Pressable, StyleProp, View, ViewStyle } from 'react-native';
-import { ImageStyle } from 'react-native-fast-image';
+import { ImageStyle, Pressable, StyleProp, View, ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { FlashList } from '@shopify/flash-list';

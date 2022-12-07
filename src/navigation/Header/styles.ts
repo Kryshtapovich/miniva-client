@@ -1,15 +1,22 @@
 import { withStyles } from '@utils/hooks';
 
-export const useStyles = withStyles(({ theme, insets, createShadow }) => ({
+export const useStyles = withStyles(({ theme, insets, createShadow, responsive }) => ({
   container: {
-    justifyContent: 'center',
     alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: insets.top || theme.spacing.m,
     paddingBottom: theme.spacing.m,
     backgroundColor: theme.colors.white,
-    borderBottomLeftRadius: theme.radius.l,
-    borderBottomRightRadius: theme.radius.l,
-    ...createShadow({ width: 0, height: 3, elevation: 7 }),
+    ...responsive({
+      web: {
+        marginLeft: 95,
+      },
+      mobile: {
+        borderBottomLeftRadius: theme.radius.l,
+        borderBottomRightRadius: theme.radius.l,
+        ...createShadow({ width: 0, height: 3, elevation: 7 }),
+      },
+    }),
   },
   text: {
     fontSize: theme.font.size.l,

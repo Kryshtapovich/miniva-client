@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, View } from 'react-native';
+import { Pressable, ScrollView, View, ImageStyle } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-import { ImageStyle } from 'react-native-fast-image';
 
 import { FlashList } from '@shopify/flash-list';
 

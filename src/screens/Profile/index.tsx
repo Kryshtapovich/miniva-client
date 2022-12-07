@@ -33,7 +33,7 @@ export function ProfileScreen() {
   };
 
   return (
-    <ScreenContainer>
+    <ScreenContainer containerStyle={styles.container}>
       <Paper>
         <TouchableOpacity style={styles.menuItem}>
           <Typography text={'My Posts'} />

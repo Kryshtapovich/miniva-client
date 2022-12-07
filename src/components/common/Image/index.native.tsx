@@ -2,15 +2,15 @@ import { useState } from 'react';
 import { StyleProp, Dimensions } from 'react-native';
 import FastImage, { OnLoadEvent, ImageStyle } from 'react-native-fast-image';
 
-interface Props {
-  uri: string;
-  fitScreen?: boolean;
+import { Props } from './types';
+
+interface NativeImageProps extends Omit<Props, 'style'> {
   style?: StyleProp<ImageStyle>;
 }
 
 const screenWidth = Dimensions.get('screen').width;
 
-export function Image(props: Props) {
+export function Image(props: NativeImageProps) {
   const { uri, style, fitScreen } = props;
   const [aspectRatio, setAspectRatio] = useState(1);
 

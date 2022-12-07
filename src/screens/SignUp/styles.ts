@@ -9,6 +9,7 @@ export const useStyles = withStyles(({ theme }) => ({
   },
   form: {
     width: '95%',
+    maxWidth: 500,
   },
   footer: {
     flexDirection: 'row',
