@@ -1,5 +1,5 @@
 import { useEffect, useLayoutEffect, useState } from 'react';
-import { View } from 'react-native';
+import { useWindowDimensions, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
@@ -19,6 +19,7 @@ const engines = Array.from({ length: 84 }, (_, i) => {
 
 function Component() {
   const { setOptions } = useNavigation();
+  const { width } = useWindowDimensions();
 
   const { control, onSubmit, errors, reset } = useCarForm();
   const styles = useStyles();
@@ -61,6 +62,7 @@ function Component() {
             control={control}
             options={options}
             error={errors[name]}
+            containerStyle={styles.field}
             {...rest}
           />
         );
@@ -69,7 +71,15 @@ function Component() {
         return <FormImagePicker control={control} name={name} error={errors[name]} />;
       }
       default:
-        return <FormTextInput name={name} control={control} error={errors[name]} {...rest} />;
+        return (
+          <FormTextInput
+            name={name}
+            control={control}
+            error={errors[name]}
+            containerStyle={styles.field}
+            {...rest}
+          />
+        );
     }
   };
 
@@ -94,16 +104,21 @@ function Component() {
     }
   });
 
+  const numColumns = width > 700 ? 2 : 1;
+
   return (
     <View style={styles.container}>
       <KeyboardAwareFlatList
         data={fields}
+        key={numColumns}
+        numColumns={numColumns}
         renderItem={renderField}
         removeClippedSubviews={false}
         ListHeaderComponent={getHeader}
         enableResetScrollToCoords={false}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={getSeparator}
+        columnWrapperStyle={numColumns > 1 && styles.columnWrapper}
       />
       <Spacer vertical={'s'} />
       <Button label="Submit" onPress={submit} loading={isLoading} />

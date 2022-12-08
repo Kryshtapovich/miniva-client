@@ -1,25 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Pressable, ScrollView, View, ImageStyle } from 'react-native';
+import { Platform, ScrollView, StyleProp, View, ViewStyle } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
-
-import { FlashList } from '@shopify/flash-list';
 
 import { observer, useStore } from 'miniva-common';
 
-import {
-  Button,
-  IconButton,
-  Image,
-  ImageViewer,
-  Paper,
-  Spacer,
-  Spinner,
-  Typography,
-} from '@components/common';
+import { Button, IconButton, Paper, Spacer, Spinner, Typography } from '@components/common';
 import { RouteNames, RouteParams } from '@navigation';
-
-import { useStyles } from './styles';
 import { dateToLocal } from '@utils/helpers';
+
+import { ImageList } from './ImageList';
+import { useStyles } from './styles';
 
 function Component() {
   const { params } = useRoute<RouteParams<RouteNames.car>>();
@@ -33,7 +23,6 @@ function Component() {
   const { car, getCar, setCar } = carsStore;
 
   const [isLoading, setIsLoading] = useState(false);
-  const [viewer, setViewer] = useState({ index: 0, visible: false });
 
   useEffect(() => {
     return () => {
@@ -46,41 +35,25 @@ function Component() {
     getCar(carId).finally(() => setIsLoading(false));
   }, [carId]);
 
-  const toggleImageViewer = (index?: number) => {
-    setViewer((prev) => ({ index: index || 0, visible: !prev.visible }));
-  };
+  if (isLoading || !car) return <Spinner />;
 
-  const renderImage = ({ item, index }: { item: string; index: number }) => {
+  const getHeader = (style: StyleProp<ViewStyle>) => {
     return (
-      <Pressable onPress={toggleImageViewer.bind(null, index)}>
-        <Image fitScreen uri={item} style={styles.image as ImageStyle} />
-      </Pressable>
+      <View style={[styles.header, style]}>
+        <IconButton icon={{ set: 'AntDesign', name: 'arrowleft', size: 25 }} onPress={goBack} />
+        <IconButton icon={{ set: 'Feather', name: 'star', size: 20 }} onPress={Promise.resolve} />
+      </View>
     );
   };
 
-  const getSeparator = () => {
-    return <Spacer horizontal={'xxs'} />;
-  };
-
-  if (isLoading || !car) return <Spinner />;
-
   return (
-    <>
-      <View style={styles.container}>
-        <View style={styles.header}>
-          <IconButton icon={{ set: 'Feather', name: 'chevron-left', size: 25 }} onPress={goBack} />
-          <IconButton icon={{ set: 'Feather', name: 'star', size: 20 }} onPress={Promise.resolve} />
-        </View>
-        <ScrollView>
-          <FlashList
-            horizontal
-            data={car.car_photos}
-            estimatedItemSize={10}
-            renderItem={renderImage}
-            ItemSeparatorComponent={getSeparator}
-            showsHorizontalScrollIndicator={false}
-          />
-          <View style={styles.body}>
+    <View style={styles.container}>
+      {Platform.OS !== 'web' && getHeader(styles.mobileHeader)}
+      <ScrollView>
+        {Platform.OS === 'web' && getHeader(styles.webHeader)}
+        <View style={styles.body}>
+          <ImageList images={car.car_photos} style={styles.images} />
+          <View style={styles.info}>
             <Paper>
               <View style={styles.spacedRow}>
                 <View style={styles.row}>
@@ -109,12 +82,11 @@ function Component() {
               <Typography text={dateToLocal(car.updated_at)} />
             </Paper>
           </View>
-          <Spacer vertical={'xxl'} />
-        </ScrollView>
-        <Button label="Contact reviewer" onPress={Promise.resolve} style={styles.button} />
-      </View>
-      <ImageViewer {...viewer} images={car.car_photos} onClose={toggleImageViewer} />
-    </>
+        </View>
+        <Spacer vertical={'xxl'} />
+      </ScrollView>
+      <Button label="Contact reviewer" onPress={Promise.resolve} style={styles.button} />
+    </View>
   );
 }
 

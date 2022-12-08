@@ -1,8 +1,8 @@
 import { observer, useStore } from 'miniva-common';
 
 import { ScreenContainer } from '@components/common';
-
 import { CarList } from '@components/cars';
+
 import { useStyles } from './styles';
 
 function Component() {

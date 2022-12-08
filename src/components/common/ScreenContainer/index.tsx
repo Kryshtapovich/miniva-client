@@ -1,5 +1,5 @@
 import { PropsWithChildren } from 'react';
-import { SafeAreaView, StyleProp, View, ViewStyle } from 'react-native';
+import { Platform, SafeAreaView, StyleProp, View, ViewStyle } from 'react-native';
 
 import { useStyles } from './styles';
 
@@ -9,16 +9,26 @@ interface Props {
   contentStyle?: StyleProp<ViewStyle>;
 }
 
+function Container(props: PropsWithChildren<{ style: StyleProp<ViewStyle> }>) {
+  const { style, children } = props;
+
+  const styles = useStyles();
+
+  const params = { children, style: [styles.container, style] };
+
+  return Platform.OS === 'web' ? <View {...params} /> : <SafeAreaView {...params} />;
+}
+
 export function ScreenContainer(props: PropsWithChildren<Props>) {
   const { containerStyle, contentStyle, disablePaddings, children } = props;
 
   const styles = useStyles();
 
   return (
-    <SafeAreaView style={[styles.container, containerStyle]}>
+    <Container style={containerStyle}>
       <View style={[styles.content, !disablePaddings && styles.paddings, contentStyle]}>
         {children}
       </View>
-    </SafeAreaView>
+    </Container>
   );
 }

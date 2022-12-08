@@ -22,5 +22,5 @@
       "@utils/*": ["./src/utils/*"]
     }
   },
-  "exclude": ["node_modules", "metro.config.js"]
+  "exclude": ["node_modules", "**/*.js"]
 }

@@ -1,7 +1,7 @@
 import { ComponentProps } from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
-import { Icon, Paper, Typography } from '..';
+import { Icon, Typography } from '..';
 import { useStyles } from './styles';
 
 type IconProps = ComponentProps<typeof Icon>;
@@ -21,9 +21,9 @@ export function EmptyPlaceholder(props: Props) {
   const styles = useStyles();
 
   return (
-    <Paper style={[styles.container, style]}>
+    <View style={[styles.container, style]}>
       <Icon {...icon} size={50} />
       <Typography text={text} style={styles.text} />
-    </Paper>
+    </View>
   );
 }

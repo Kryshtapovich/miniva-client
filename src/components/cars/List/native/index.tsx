@@ -1,23 +1,20 @@
 import { useState } from 'react';
 import { RefreshControl } from 'react-native';
+
 import { FlashList } from '@shopify/flash-list';
 
 import { Car } from 'miniva-common';
 
 import { EmptyPlaceholder, Spacer } from '@components/common';
+import { CarCard } from '@components/cars';
 import { theme } from '@utils/constants';
 
-import { CarCard } from '../Card';
+import { CarListProps } from '../types';
 import { useStyles } from './styles';
 
-interface Props {
-  cars: Array<Car>;
-  onRefresh: () => Promise<void>;
-  toggleFavorite: (carId: number) => Promise<void>;
-}
-
-export function CarList(props: Props) {
+export function CarList(props: CarListProps) {
   const { cars, toggleFavorite, onRefresh } = props;
+
   const [isRefreshing, setIsRefreshing] = useState(false);
 
   const styles = useStyles();
@@ -40,13 +37,7 @@ export function CarList(props: Props) {
   };
 
   const getEmptyComponent = () => {
-    return (
-      <EmptyPlaceholder
-        text="No cars found"
-        icon={{ set: 'Ionicons', name: 'car-sport' }}
-        style={styles.placeholder}
-      />
-    );
+    return <EmptyPlaceholder text="No cars found" icon={{ set: 'Ionicons', name: 'car-sport' }} />;
   };
 
   const getExtractor = ({ id }: Car) => {
@@ -72,6 +63,7 @@ export function CarList(props: Props) {
       showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={getSeparator}
       ListEmptyComponent={getEmptyComponent}
+      contentContainerStyle={!cars.length ? styles.empty : undefined}
     />
   );
 }

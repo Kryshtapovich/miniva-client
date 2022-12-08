@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { ImageStyle, Pressable, StyleProp, View, ViewStyle } from 'react-native';
+import { ImageStyle, Platform, Pressable, StyleProp, View, ViewStyle } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { FlashList } from '@shopify/flash-list';
@@ -7,7 +7,7 @@ import { FlashList } from '@shopify/flash-list';
 import { Car } from 'miniva-common';
 
 import { RouteNames } from '@navigation';
-import { Image, Paper, Spacer, Typography } from '@components/common';
+import { Image, ImageCarousel, Paper, Spacer, Typography } from '@components/common';
 
 import { useStyles } from './styles';
 
@@ -29,13 +29,11 @@ function Component(props: Props) {
     navigate(RouteNames.car, { carId: id });
   };
 
-  const renderImage = ({ item }: { item: string }) => {
-    return (
-      <Pressable onPress={showDetails}>
-        <Image uri={item} style={styles.image as ImageStyle} />
-      </Pressable>
-    );
-  };
+  const renderImage = ({ item }: { item: string }) => (
+    <Pressable onPress={showDetails}>
+      <Image uri={item} style={styles.image as ImageStyle} />
+    </Pressable>
+  );
 
   const renderSeparator = () => {
     return <Spacer horizontal={'xs'} />;
@@ -50,13 +48,19 @@ function Component(props: Props) {
         </View>
       </View>
       <Spacer vertical={'s'} />
-      <FlashList
-        horizontal
-        data={car_photos}
-        estimatedItemSize={10}
-        renderItem={renderImage}
-        ItemSeparatorComponent={renderSeparator}
-      />
+      <View onStartShouldSetResponder={() => true}>
+        {Platform.OS === 'web' ? (
+          <ImageCarousel images={car_photos} renderImage={renderImage} style={styles.images} />
+        ) : (
+          <FlashList
+            horizontal
+            data={car_photos}
+            estimatedItemSize={10}
+            renderItem={renderImage}
+            ItemSeparatorComponent={renderSeparator}
+          />
+        )}
+      </View>
       <Spacer vertical={'s'} />
       <View style={styles.spacedRow}>
         <Typography style={styles.mainInfo} text={`${price} $`} />

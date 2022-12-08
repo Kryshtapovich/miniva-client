@@ -10,7 +10,8 @@ import { FormComponentProps, FormFieldProps } from '../types';
 
 export function FormImagePicker(props: FormComponentProps) {
   const { control, name, error } = props;
-  const [photos, setPhotos] = useState<Array<string>>([]);
+
+  const [photos, setPhotos] = useState<Array<string>>(control._fields[name]?._f.value || []);
 
   const renderField = (field: Parameters<FormFieldProps['render']>[0]) => {
     const { onChange } = field;

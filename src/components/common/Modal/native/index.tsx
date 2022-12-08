@@ -1,29 +1,25 @@
-import { PropsWithChildren } from 'react';
 import { View } from 'react-native';
 import RNModal from 'react-native-modal';
 
-import { Spacer } from '../Spacer';
+import { Spacer } from '@components/common';
+
+import { ModalProps } from '../types';
 import { useStyles } from './styles';
 
-interface Props {
-  isVisible: boolean;
-  onClose: () => void;
-}
-
-export function Modal(props: PropsWithChildren<Props>) {
-  const { isVisible: isVisbile, children, onClose } = props;
+export function Modal(props: ModalProps) {
+  const { visible, children, setVisible } = props;
 
   const styles = useStyles();
 
   return (
     <RNModal
       hasBackdrop
+      isVisible={visible}
       statusBarTranslucent
-      isVisible={isVisbile}
       swipeDirection={'down'}
-      onBackdropPress={onClose}
-      onSwipeComplete={onClose}
       style={styles.container}
+      onBackdropPress={setVisible.bind(null, false)}
+      onSwipeComplete={setVisible.bind(null, false)}
     >
       <View style={styles.handleContainer}>
         <View style={styles.handle} />

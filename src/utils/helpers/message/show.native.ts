@@ -1,10 +1,8 @@
-import { theme } from '@utils/constants';
 import { showMessage as flashMessage } from 'react-native-flash-message';
 
-interface Params {
-  type: 'success' | 'error';
-  message: string;
-}
+import { theme } from '@utils/constants';
+
+import { Params } from './types';
 
 export const showMessage = ({ type, message }: Params) => {
   flashMessage({

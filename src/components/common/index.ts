@@ -1,6 +1,6 @@
 export { Icon } from './Icon';
 export { Paper } from './Paper';
-export { Image } from './Image/index.web';
+export { Image } from './Image';
 export { Modal } from './Modal';
 export { Spacer } from './Spacer';
 export { Button } from './Button';
@@ -12,6 +12,8 @@ export { IconButton } from './IconButton';
 export { Typography } from './Typography';
 export { ImagePicker } from './ImagePicker';
 export { ImageViewer } from './ImageViewer';
+export { ImageCarousel } from './ImageCarousel';
 export { ScreenContainer } from './ScreenContainer';
 export { EmptyPlaceholder } from './EmptyPlaceholder';
+export { MessageContainer } from './MessageContainer';
 export { KeyboardContainer } from './KeyboardContainer';

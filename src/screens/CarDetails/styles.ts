@@ -1,26 +1,57 @@
 import { withStyles } from '@utils/hooks';
 
-export const useStyles = withStyles(({ theme, insets, height }) => ({
+export const useStyles = withStyles(({ theme, insets, width, responsive }) => ({
   container: {
     flex: 1,
   },
   header: {
-    zIndex: 1,
-    position: 'absolute',
-    left: theme.spacing.l,
-    top: insets.top || theme.spacing.l,
-    right: theme.spacing.l,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
-  image: {
-    height: height / 2.5,
-    borderBottomLeftRadius: theme.radius.m,
-    borderBottomRightRadius: theme.radius.m,
+  webHeader: {
+    marginVertical: theme.spacing.m,
+    paddingHorizontal: theme.spacing.m,
+  },
+  mobileHeader: {
+    zIndex: 1,
+    position: 'absolute',
+    left: theme.spacing.l,
+    right: theme.spacing.l,
+    top: insets.top || theme.spacing.l,
+  },
+  images: {
+    ...responsive({
+      web: {
+        width: width / 2,
+      },
+      mobile: {
+        width,
+      },
+    }),
   },
   body: {
-    marginVertical: theme.spacing.m,
-    marginHorizontal: theme.spacing.s,
+    ...responsive({
+      web: {
+        flex: 1,
+        flexDirection: 'row',
+        paddingHorizontal: theme.spacing.m,
+      },
+      mobile: {
+        flexDirection: 'column',
+      },
+    }),
+  },
+  info: {
+    flexGrow: 1,
+    ...responsive({
+      web: {
+        marginLeft: theme.spacing.m,
+      },
+      mobile: {
+        marginVertical: theme.spacing.m,
+        marginHorizontal: theme.spacing.s,
+      },
+    }),
   },
   row: {
     flexDirection: 'row',

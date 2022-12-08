@@ -11,9 +11,17 @@ export const useStyles = withStyles(({ theme, responsive }) => ({
   },
   button: {
     position: 'absolute',
-    left: '25%',
-    right: '25%',
     bottom: theme.spacing.m,
+    ...responsive({
+      web: {
+        left: '40%',
+        right: '40%',
+      },
+      mobile: {
+        left: '25%',
+        right: '25%',
+      },
+    }),
   },
   hidden: {
     display: 'none',

@@ -1,4 +1,5 @@
 import { ComponentProps } from 'react';
+import { StyleProp, ViewStyle } from 'react-native';
 
 import { FormField } from 'miniva-common';
 
@@ -9,4 +10,5 @@ export interface FormComponentProps {
   control: FormFieldProps['control'];
   label?: string;
   error?: string;
+  containerStyle?: StyleProp<ViewStyle>;
 }

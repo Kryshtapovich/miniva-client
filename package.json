@@ -12,8 +12,7 @@
     "common": "yarn add https://github.com/miniva-cars/miniva-common",
     "assets": "npx react-native-asset",
     "web": "cd web && webpack-dev-server",
-    "pods": "cd ios && pod install && cd ..",
-    "build:android": "react-native bundle --platform android --dev false --entry-file index.ts --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res && cd android && ./gradlew clean && ./gradlew assembleDebug"
+    "pods": "cd ios && pod install && cd .."
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.17.11",
@@ -39,7 +38,8 @@
     "react-native-screens": "^3.18.0",
     "react-native-splash-screen": "^3.3.0",
     "react-native-vector-icons": "^9.2.0",
-    "react-native-web": "^0.18.10"
+    "react-native-web": "^0.18.10",
+    "react-toastify": "^9.1.1"
   },
   "devDependencies": {
     "@babel/core": "^7.12.9",
@@ -63,7 +63,6 @@
     "mini-css-extract-plugin": "^2.7.2",
     "process": "^0.11.10",
     "react-native-typescript-transformer": "^1.2.13",
-    "sass-loader": "^13.2.0",
     "style-loader": "^3.3.1",
     "ts-loader": "^9.4.2",
     "typescript": "^4.8.3",

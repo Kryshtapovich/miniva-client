@@ -16,6 +16,8 @@ import GilroyBold from 'assets/fonts/Gilroy/Gilroy-Bold.ttf';
 import GilroyMedium from 'assets/fonts/Gilroy/Gilroy-Medium.ttf';
 import GilroySemiBold from 'assets/fonts/Gilroy/Gilroy-SemiBold.ttf';
 
+import 'react-toastify/dist/ReactToastify.min.css';
+
 const fontStyle = `
 @font-face {
   src: url(${GilroyBold});

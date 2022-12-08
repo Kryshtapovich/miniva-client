@@ -12,7 +12,7 @@ import { useStyles } from './styles';
 type Props = FormComponentProps & ComponentProps<typeof TextInput>;
 
 export function FormTextInput(props: Props) {
-  const { name, label, error, control, ...rest } = props;
+  const { name, label, error, control, containerStyle, ...rest } = props;
 
   const styles = useStyles();
 
@@ -31,7 +31,7 @@ export function FormTextInput(props: Props) {
   };
 
   return (
-    <View>
+    <View style={containerStyle}>
       {label && (
         <>
           <Typography text={label} error={!!error} />

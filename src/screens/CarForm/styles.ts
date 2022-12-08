@@ -11,4 +11,10 @@ export const useStyles = withStyles(({ theme, insets }) => ({
     marginBottom: theme.spacing.m,
     marginLeft: 0,
   },
+  field: {
+    flex: 0.49,
+  },
+  columnWrapper: {
+    justifyContent: 'space-between',
+  },
 }));

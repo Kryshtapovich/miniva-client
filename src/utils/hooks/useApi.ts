@@ -10,7 +10,7 @@ export const useApi = () => {
 
   useEffect(() => {
     setupApi({
-      url: 'http://192.168.100.35:8000' || '',
+      url: process.env.API_URL || '',
       onRequest: async (config) => {
         const user = await getUser();
         if (user?.token && !isTokenExpired(user.token) && config.headers) {

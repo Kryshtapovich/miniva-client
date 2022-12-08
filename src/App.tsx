@@ -1,11 +1,11 @@
 import { useLayoutEffect } from 'react';
 import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
-import FlashMessage from 'react-native-flash-message';
 import SplashScreen from 'react-native-splash-screen';
 
 import { observer, useStore } from 'miniva-common';
 
+import { MessageContainer } from '@components/common';
 import { Navigator } from '@navigation';
 import { theme } from '@utils/constants';
 import { getUser } from '@utils/helpers';
@@ -27,7 +27,7 @@ function Component() {
     <SafeAreaProvider>
       <StatusBar barStyle={'dark-content'} backgroundColor={theme.colors.white} />
       <Navigator isAuthorized={isAuthorized} />
-      <FlashMessage position={'top'} />
+      <MessageContainer />
     </SafeAreaProvider>
   );
 }
