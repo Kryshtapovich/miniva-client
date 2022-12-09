@@ -1,5 +1,6 @@
-import { Car } from 'miniva-common';
 import { KeyboardTypeOptions } from 'react-native';
+
+import { Car } from '@models';
 
 export interface Field {
   name: keyof Car;

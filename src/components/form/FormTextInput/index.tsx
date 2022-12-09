@@ -1,10 +1,9 @@
 import { ComponentProps } from 'react';
 import { View } from 'react-native';
 
-import { FormField } from 'miniva-common';
-
 import { Spacer, TextInput, Typography } from '@components/common';
 
+import { FormField } from '../FormField';
 import { ErrorText } from '../ErrorText';
 import { FormComponentProps, FormFieldProps } from '../types';
 import { useStyles } from './styles';

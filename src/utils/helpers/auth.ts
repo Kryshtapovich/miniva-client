@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { User } from 'miniva-common';
+
+import { User } from '@models';
 
 const key = '@token';
 

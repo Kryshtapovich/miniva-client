@@ -1,7 +1,8 @@
-import { observer, useStore } from 'miniva-common';
+import { observer } from 'mobx-react-lite';
 
 import { ScreenContainer } from '@components/common';
 import { CarList } from '@components/cars';
+import { useStore } from '@store';
 
 import { useStyles } from './styles';
 

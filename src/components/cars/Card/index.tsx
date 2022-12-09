@@ -4,10 +4,9 @@ import { useNavigation } from '@react-navigation/native';
 
 import { FlashList } from '@shopify/flash-list';
 
-import { Car } from 'miniva-common';
-
-import { RouteNames } from '@navigation';
 import { Image, ImageCarousel, Paper, Spacer, Typography } from '@components/common';
+import { RouteNames } from '@navigation';
+import { Car } from '@models';
 
 import { useStyles } from './styles';
 

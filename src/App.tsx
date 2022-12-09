@@ -3,13 +3,14 @@ import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
-import { observer, useStore } from 'miniva-common';
+import { observer } from 'mobx-react-lite';
 
 import { MessageContainer } from '@components/common';
 import { Navigator } from '@navigation';
 import { theme } from '@utils/constants';
 import { getUser } from '@utils/helpers';
-import { useApi } from '@utils/hooks';
+import { useStore } from '@store';
+import { useApi } from '@api';
 
 function Component() {
   const { userStore } = useStore();

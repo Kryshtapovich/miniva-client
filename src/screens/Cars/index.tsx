@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { Platform } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { observer, useStore } from 'miniva-common';
+import { observer } from 'mobx-react-lite';
 
-import { RouteNames } from '@navigation';
-import { CarList } from '@components/cars';
 import { Button, ScreenContainer, Spinner } from '@components/common';
+import { CarList } from '@components/cars';
+import { RouteNames } from '@navigation';
+import { useStore } from '@store';
 
 import { CarFilterModal } from '../CarFilter/modal';
 import { useStyles } from './styles';

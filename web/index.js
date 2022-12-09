@@ -1,6 +1,4 @@
 import { AppRegistry } from 'react-native';
-import { name } from '../app.json';
-import { App } from '../src/App';
 
 import AntDesign from 'react-native-vector-icons/Fonts/AntDesign.ttf';
 import Feather from 'react-native-vector-icons/Fonts/Feather.ttf';
@@ -17,6 +15,9 @@ import GilroyMedium from 'assets/fonts/Gilroy/Gilroy-Medium.ttf';
 import GilroySemiBold from 'assets/fonts/Gilroy/Gilroy-SemiBold.ttf';
 
 import 'react-toastify/dist/ReactToastify.min.css';
+
+import { name } from '../app.json';
+import { App } from '../src/App';
 
 const fontStyle = `
 @font-face {

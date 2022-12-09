@@ -3,11 +3,10 @@ import { RefreshControl } from 'react-native';
 
 import { FlashList } from '@shopify/flash-list';
 
-import { Car } from 'miniva-common';
-
 import { EmptyPlaceholder, Spacer } from '@components/common';
 import { CarCard } from '@components/cars';
 import { theme } from '@utils/constants';
+import { Car } from '@models';
 
 import { CarListProps } from '../types';
 import { useStyles } from './styles';

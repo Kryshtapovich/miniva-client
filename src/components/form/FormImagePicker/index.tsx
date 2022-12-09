@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { View } from 'react-native';
 
-import { FormField } from 'miniva-common';
-
 import { ImagePicker } from '@components/common';
 
+import { FormField } from '../FormField';
 import { ErrorText } from '../ErrorText';
 import { FormComponentProps, FormFieldProps } from '../types';
 

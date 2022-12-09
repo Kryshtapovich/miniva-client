@@ -1,10 +1,12 @@
 import { View } from 'react-native';
 
-import { observer, useCarForm, useStore } from 'miniva-common';
+import { observer } from 'mobx-react-lite';
 
 import { Spacer, Typography } from '@components/common';
 import { FormSelector, FormTextInput } from '@components/form';
+import { useCarForm } from '@utils/hooks/form';
 import { useScreenEnter } from '@utils/hooks';
+import { useStore } from '@store';
 
 import { useStyles } from './styles';
 

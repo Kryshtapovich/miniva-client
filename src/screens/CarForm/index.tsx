@@ -3,11 +3,13 @@ import { useWindowDimensions, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { KeyboardAwareFlatList } from 'react-native-keyboard-aware-scroll-view';
 
-import { observer, useCarForm, useStore } from 'miniva-common';
+import { observer } from 'mobx-react-lite';
 
 import { Spacer, Button } from '@components/common';
 import { FormImagePicker, FormSelector, FormTextInput } from '@components/form';
+import { useCarForm } from '@utils/hooks/form';
 import { showMessage } from '@utils/helpers';
+import { useStore } from '@store';
 
 import { Field, fields } from './config';
 import { useStyles } from './styles';

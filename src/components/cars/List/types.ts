@@ -1,4 +1,4 @@
-import { Car } from 'miniva-common';
+import { Car } from '@models';
 
 export interface CarListProps {
   cars: Array<Car>;

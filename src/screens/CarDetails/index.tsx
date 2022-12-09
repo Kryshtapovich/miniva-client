@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { Platform, ScrollView, StyleProp, View, ViewStyle } from 'react-native';
 import { useNavigation, useRoute } from '@react-navigation/native';
 
-import { observer, useStore } from 'miniva-common';
+import { observer } from 'mobx-react-lite';
 
 import { Button, IconButton, Paper, Spacer, Spinner, Typography } from '@components/common';
 import { RouteNames, RouteParams } from '@navigation';
 import { dateToLocal } from '@utils/helpers';
+import { useStore } from '@store';
 
 import { ImageList } from './ImageList';
 import { useStyles } from './styles';

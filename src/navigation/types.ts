@@ -1,6 +1,6 @@
 import { ParamListBase, RouteProp } from '@react-navigation/native';
 
-import { Car } from 'miniva-common';
+import { Car } from '@models';
 
 declare global {
   namespace ReactNavigation {

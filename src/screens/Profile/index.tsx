@@ -1,8 +1,6 @@
 import { TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { useStore } from 'miniva-common';
-
 import {
   Button,
   Divider,
@@ -14,6 +12,7 @@ import {
 } from '@components/common';
 import { RouteNames } from '@navigation';
 import { removeUser } from '@utils/helpers';
+import { useStore } from '@store';
 
 import { useStyles } from './styles';
 

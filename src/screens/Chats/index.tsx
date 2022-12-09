@@ -1,6 +1,6 @@
 import { SafeAreaView } from 'react-native';
 
-import { observer } from 'miniva-common';
+import { observer } from 'mobx-react-lite';
 
 function Component() {
   return <SafeAreaView></SafeAreaView>;
