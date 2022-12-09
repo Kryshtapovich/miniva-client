@@ -40,29 +40,28 @@ export function ImageCarousel(props: Props) {
 
   return (
     <View style={[styles.container, style]}>
-      <View style={[styles.button, styles.left]}>
-        <IconButton onPress={goBack} icon={{ set: 'Feather', name: 'chevron-left', size: 20 }} />
-      </View>
-      <>
-        <FlashList
-          ref={ref}
-          horizontal
-          data={images}
-          estimatedItemSize={10}
-          renderItem={renderImage}
-          scrollEnabled={scrollEnabled}
-          showsHorizontalScrollIndicator={false}
-          ItemSeparatorComponent={renderSeparator}
-          onTouchEnd={setScrollEnabled.bind(null, true)}
-          onTouchStart={setScrollEnabled.bind(null, false)}
-        />
-      </>
-      <View style={[styles.button, styles.right]}>
-        <IconButton
-          onPress={goForward}
-          icon={{ set: 'Feather', name: 'chevron-right', size: 20 }}
-        />
-      </View>
+      <IconButton
+        onPress={goBack}
+        style={[styles.button, styles.left]}
+        icon={{ set: 'Feather', name: 'chevron-left', size: 20 }}
+      />
+      <FlashList
+        ref={ref}
+        horizontal
+        data={images}
+        estimatedItemSize={10}
+        renderItem={renderImage}
+        scrollEnabled={scrollEnabled}
+        showsHorizontalScrollIndicator={false}
+        ItemSeparatorComponent={renderSeparator}
+        onTouchEnd={setScrollEnabled.bind(null, true)}
+        onTouchStart={setScrollEnabled.bind(null, false)}
+      />
+      <IconButton
+        onPress={goForward}
+        style={[styles.button, styles.right]}
+        icon={{ set: 'Feather', name: 'chevron-right', size: 20 }}
+      />
     </View>
   );
 }

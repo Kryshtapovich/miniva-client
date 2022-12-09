@@ -8,8 +8,9 @@ export const useStyles = withStyles(({ theme }) => ({
   button: {
     position: 'absolute',
     zIndex: 1,
-    height: '100%',
-    justifyContent: 'center',
+    top: 0,
+    bottom: 0,
+    marginVertical: 'auto',
   },
   left: {
     left: theme.spacing.m,

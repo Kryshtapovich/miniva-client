@@ -9,7 +9,9 @@ export const useStyles = withStyles(({ theme }) => ({
   },
   content: {
     width: 400,
+    maxHeight: '90vh',
     maxWidth: '90vw',
+    overflowY: 'auto',
     padding: theme.spacing.m,
     borderRadius: theme.radius.m,
     backgroundColor: theme.colors.white,

@@ -4,7 +4,7 @@ import { ModalProps } from '../types';
 import { useStyles } from './styles';
 
 export function Modal(props: ModalProps) {
-  const { visible, setVisible, children } = props;
+  const { visible, setVisible, children, contentStyle } = props;
 
   const styles = useStyles();
 
@@ -13,7 +13,7 @@ export function Modal(props: ModalProps) {
       <RNModal visible={visible} transparent>
         <View style={styles.container}>
           <TouchableWithoutFeedback>
-            <View style={styles.content}>{children}</View>
+            <View style={[styles.content, contentStyle]}>{children}</View>
           </TouchableWithoutFeedback>
         </View>
       </RNModal>

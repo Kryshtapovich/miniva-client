@@ -7,7 +7,7 @@ import { ModalProps } from '../types';
 import { useStyles } from './styles';
 
 export function Modal(props: ModalProps) {
-  const { visible, children, setVisible } = props;
+  const { visible, children, setVisible, contentStyle } = props;
 
   const styles = useStyles();
 
@@ -25,7 +25,7 @@ export function Modal(props: ModalProps) {
         <View style={styles.handle} />
         <Spacer vertical={'s'} />
       </View>
-      <View style={styles.content}>{children}</View>
+      <View style={[styles.content, contentStyle]}>{children}</View>
     </RNModal>
   );
 }

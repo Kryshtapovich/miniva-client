@@ -1,19 +1,13 @@
-import { theme } from '@utils/constants';
 import { StatusBar } from 'react-native';
 import ImageView from 'react-native-image-viewing';
 
-import { Typography } from '../Typography';
+import { Typography } from '@components/common';
+import { theme } from '@utils/constants';
 
+import { ImageViewerProps } from '../types';
 import { useStyles } from './styles';
 
-interface Props {
-  index?: number;
-  visible: boolean;
-  onClose: () => void;
-  images: Array<string>;
-}
-
-export function ImageViewer(props: Props) {
+export function ImageViewer(props: ImageViewerProps) {
   const { images, index, onClose, visible } = props;
 
   const imageUrls = images.map((uri) => ({ uri }));
