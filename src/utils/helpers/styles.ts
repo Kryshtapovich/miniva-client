@@ -10,3 +10,7 @@ export const responsiveStyles = (width: number) => {
     return (width > 700 ? web : mobile) as object;
   };
 };
+
+export const webStyles = (styles: Partial<CSSStyleDeclaration>) => {
+  return styles as StyleProp<any>;
+};

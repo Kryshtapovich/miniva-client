@@ -15,8 +15,8 @@ import { Field, fields } from './config';
 import { useStyles } from './styles';
 
 const engines = Array.from({ length: 84 }, (_, i) => {
-  const value = i / 10 + 0.7;
-  return { label: value.toFixed(1), value };
+  const value = i * 100 + 700;
+  return { label: value.toString(), value };
 });
 
 function Component() {
@@ -53,9 +53,9 @@ function Component() {
     const { name, ...rest } = item;
     switch (name) {
       case 'manufacturer':
-      case 'engine': {
+      case 'engine_volume': {
         const options =
-          name === 'engine'
+          name === 'engine_volume'
             ? engines
             : manufacturers.map(({ id, title }) => ({ label: title, value: id }));
         return (
@@ -69,9 +69,9 @@ function Component() {
           />
         );
       }
-      case 'car_photos': {
-        return <FormImagePicker control={control} name={name} error={errors[name]} />;
-      }
+      // case 'car_photos': {
+      //   return <FormImagePicker control={control} name={name} error={errors[name]} />;
+      // }
       default:
         return (
           <FormTextInput
@@ -117,6 +117,12 @@ function Component() {
         renderItem={renderField}
         removeClippedSubviews={false}
         ListHeaderComponent={getHeader}
+        ListFooterComponent={
+          <>
+            {getSeparator()}
+            <FormImagePicker control={control} name={'car_photos'} error={errors['car_photos']} />
+          </>
+        }
         enableResetScrollToCoords={false}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={getSeparator}

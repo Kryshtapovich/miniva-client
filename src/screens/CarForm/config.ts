@@ -34,20 +34,15 @@ export const fields: Array<Field> = [
     keyboardType: 'number-pad',
   },
   {
-    name: 'engine',
-    label: 'Engine (liters)',
-  },
-  {
-    name: 'carcase',
-    label: 'Carcase',
-    keyboardType: 'default',
+    name: 'engine_volume',
+    label: 'Engine (ml)',
   },
   {
     name: 'price',
     label: 'Price ($)',
     keyboardType: 'numeric',
   },
-  {
-    name: 'car_photos',
-  },
+  // {
+  //   name: 'car_photos',
+  // },
 ];

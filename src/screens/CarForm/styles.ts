@@ -1,6 +1,6 @@
 import { withStyles } from '@utils/hooks';
 
-export const useStyles = withStyles(({ theme, insets }) => ({
+export const useStyles = withStyles(({ theme, insets, responsive }) => ({
   container: {
     flex: 1,
     marginTop: (insets.top || theme.spacing.m) + theme.spacing.l,
@@ -12,7 +12,11 @@ export const useStyles = withStyles(({ theme, insets }) => ({
     marginLeft: 0,
   },
   field: {
-    flex: 0.49,
+    ...responsive({
+      web: {
+        width: '49%',
+      },
+    }),
   },
   columnWrapper: {
     justifyContent: 'space-between',

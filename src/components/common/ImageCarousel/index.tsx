@@ -38,13 +38,21 @@ export function ImageCarousel(props: Props) {
     return <Spacer horizontal={'s'} />;
   };
 
+  const getButton = (position: 'left' | 'right') => {
+    if (images.length === 1) return null;
+
+    return (
+      <IconButton
+        onPress={position === 'left' ? goBack : goForward}
+        style={[styles.button, styles[position]]}
+        icon={{ set: 'Feather', name: `chevron-${position}`, size: 20 }}
+      />
+    );
+  };
+
   return (
     <View style={[styles.container, style]}>
-      <IconButton
-        onPress={goBack}
-        style={[styles.button, styles.left]}
-        icon={{ set: 'Feather', name: 'chevron-left', size: 20 }}
-      />
+      {getButton('left')}
       <FlashList
         ref={ref}
         horizontal
@@ -57,11 +65,7 @@ export function ImageCarousel(props: Props) {
         onTouchEnd={setScrollEnabled.bind(null, true)}
         onTouchStart={setScrollEnabled.bind(null, false)}
       />
-      <IconButton
-        onPress={goForward}
-        style={[styles.button, styles.right]}
-        icon={{ set: 'Feather', name: 'chevron-right', size: 20 }}
-      />
+      {getButton('right')}
     </View>
   );
 }

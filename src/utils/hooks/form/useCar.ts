@@ -6,8 +6,7 @@ import { useForm } from './useForm';
 
 const validationSchema = object({
   model: string().required('Model is required'),
-  engine: string().required('Engine is required'),
-  carcase: string().required('Carcase is required'),
+  engine_volume: number().required('Engine is required'),
   color: string().required('Color is required'),
   vin: string()
     .test({ test: (val) => val?.length === 17, message: 'VIN should include 17 characters' })

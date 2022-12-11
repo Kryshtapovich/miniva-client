@@ -43,13 +43,14 @@ export const useApi = () => {
         config.headers['Authorization'] = `Bearer ${user.token}`;
       }
       return config;
-    });
+    }, Promise.reject);
 
     axios.interceptors.response.use(null, (error) => {
       if (error.response?.status === 403) {
         clear();
         showMessage({ type: 'error', message: 'Session has been expired' });
       }
+      return Promise.reject(error);
     });
   }, []);
 };

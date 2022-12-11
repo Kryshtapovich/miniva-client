@@ -14,9 +14,7 @@ export function CarList(props: CarListProps) {
   return (
     <ScrollView contentContainerStyle={styles[cars.length ? 'content' : 'container']}>
       {cars.length ? (
-        cars.map((car) => (
-          <CarCard key={car.id} car={car} toggleFavorite={toggleFavorite} style={styles.item} />
-        ))
+        cars.map((car) => <CarCard key={car.id} car={car} toggleFavorite={toggleFavorite} />)
       ) : (
         <EmptyPlaceholder text="No cars found" icon={{ set: 'Ionicons', name: 'car-sport' }} />
       )}

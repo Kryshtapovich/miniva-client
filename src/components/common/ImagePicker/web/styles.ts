@@ -1,6 +1,6 @@
 import { withStyles } from '@utils/hooks';
 
-export const useStyles = withStyles(({ theme, width }) => ({
+export const useStyles = withStyles(({ theme, width, webStyles }) => ({
   button: {
     aspectRatio: 1,
     alignItems: 'center',
@@ -10,22 +10,19 @@ export const useStyles = withStyles(({ theme, width }) => ({
     width: width / 3,
     maxWidth: 300,
   },
-  notEmpty: {
-    marginBottom: theme.spacing.m,
-  },
-  first: {
-    marginRight: theme.spacing.s,
-  },
-  last: {
-    marginLeft: theme.spacing.s,
-  },
-  central: {
-    marginHorizontal: theme.spacing.s,
+  list: {
+    flexWrap: 'wrap',
+    flexDirection: 'row',
+    ...webStyles({
+      gap: theme.spacing.m + 'px',
+    }),
   },
   image: {
     borderRadius: theme.radius.m,
     height: width / 3,
+    width: width / 3,
     maxHeight: 300,
+    maxWidth: 300,
   },
   iconContainer: {
     position: 'absolute',

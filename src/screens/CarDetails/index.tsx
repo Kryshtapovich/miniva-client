@@ -65,7 +65,7 @@ function Component() {
                 <Typography text={`${car.price} $`} style={styles.title} />
               </View>
               <Spacer vertical={'xs'} />
-              <Typography text={`${car.engine} l, ${car.hp} hp, ${car.color}`} />
+              <Typography text={`${car.engine_volume} ml, ${car.hp} hp, ${car.color}`} />
             </Paper>
             <Spacer vertical={'s'} />
             <Paper>
