@@ -16,11 +16,12 @@ export function FormSelector(props: Props) {
   const styles = useStyles();
 
   const renderField = (field: Parameters<FormFieldProps['render']>[0]) => {
-    const { onChange } = field;
+    const { value, onChange } = field;
 
     return (
       <Selector
         {...rest}
+        value={+value}
         onChange={onChange}
         style={{
           inputIOS: error ? styles.error : undefined,

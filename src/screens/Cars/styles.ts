@@ -26,4 +26,20 @@ export const useStyles = withStyles(({ theme, responsive }) => ({
   hidden: {
     display: 'none',
   },
+  withFilter: {
+    aspectRatio: 1,
+    width: theme.spacing.m,
+    borderRadius: theme.radius.m,
+    backgroundColor: theme.colors.error,
+    position: 'absolute',
+    bottom: 2.5 * theme.spacing.l,
+    ...responsive({
+      web: {
+        right: '39.5%',
+      },
+      mobile: {
+        right: '24%',
+      },
+    }),
+  },
 }));

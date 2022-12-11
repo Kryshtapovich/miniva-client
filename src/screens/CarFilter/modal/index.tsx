@@ -1,17 +1,22 @@
 import { View } from 'react-native';
 
-import { Button, IconButton, Modal, Typography } from '@components/common';
+import { IconButton, Modal, Typography } from '@components/common';
+import { useStore } from '@store';
 
 import { CarFilterContent } from '../content';
 import { useStyles } from './styles';
+import { observer } from 'mobx-react-lite';
 
 interface Props {
   visible: boolean;
   setVisible: (value: boolean) => void;
 }
 
-export function CarFilterModal(props: Props) {
+function Component(props: Props) {
   const { visible, setVisible } = props;
+
+  const { carsStore } = useStore();
+  const { resetFilter } = carsStore;
 
   const styles = useStyles();
 
@@ -23,10 +28,11 @@ export function CarFilterModal(props: Props) {
           onPress={setVisible.bind(null, false)}
           style={styles.button}
         />
-        <Typography text="Reset all" onPress={Promise.resolve} style={styles.resetText} />
+        <Typography text="Reset all" onPress={resetFilter} style={styles.resetText} />
       </View>
-      <CarFilterContent />
-      <Button label="Filter" onPress={Promise.resolve} />
+      <CarFilterContent onFilter={setVisible.bind(null, false)} />
     </Modal>
   );
 }
+
+export const CarFilterModal = observer(Component);

@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Platform } from 'react-native';
+import { Platform, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
 import { observer } from 'mobx-react-lite';
@@ -14,7 +14,7 @@ import { useStyles } from './styles';
 
 function Component() {
   const { carsStore } = useStore();
-  const { cars, loading, getAll } = carsStore;
+  const { cars, loading, getAll, isFilterApplied } = carsStore;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -35,14 +35,15 @@ function Component() {
   return (
     <ScreenContainer disablePaddings containerStyle={styles.container}>
       <CarList cars={cars} toggleFavorite={Promise.resolve} onRefresh={getAll} />
-      {!!cars.length && (
+      <View>
         <Button
           label="Filters"
           onPress={goToFilter}
           icon={{ set: 'Feather', name: 'filter' }}
-          style={[styles.button, !cars.length && styles.hidden]}
+          style={styles.button}
         />
-      )}
+        <View style={styles[isFilterApplied ? 'withFilter' : 'hidden']} />
+      </View>
       <CarFilterModal visible={isModalVisible} setVisible={setIsModalVisible} />
     </ScreenContainer>
   );

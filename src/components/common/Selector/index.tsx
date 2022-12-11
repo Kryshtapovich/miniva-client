@@ -5,6 +5,7 @@ import { Icon } from '../Icon';
 import { useStyles } from './styles';
 
 interface Props {
+  value: number;
   placeholder?: string;
   onChange: (value: number) => void;
   options: Array<{ label: string; value: number }>;
@@ -12,7 +13,7 @@ interface Props {
 }
 
 export function Selector(props: Props) {
-  const { onChange, options, style, placeholder } = props;
+  const { onChange, value, options, style, placeholder } = props;
 
   const styles = useStyles();
 
@@ -28,6 +29,7 @@ export function Selector(props: Props) {
 
   return (
     <Select
+      value={value}
       items={options}
       Icon={renderIcon as any}
       onValueChange={onValueChange}

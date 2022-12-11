@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 interface Params<T> {
   defaultValues?: T;
-  validationSchema: any;
+  validationSchema?: any;
 }
 
 export const useForm = <T extends Record<string, any> | undefined>({
@@ -13,7 +13,7 @@ export const useForm = <T extends Record<string, any> | undefined>({
 }: Params<T>) => {
   const { formState, register, control, handleSubmit, reset } = useFormLib({
     defaultValues,
-    resolver: yupResolver(validationSchema),
+    resolver: validationSchema && yupResolver(validationSchema),
   });
 
   const errors = useMemo(() => {

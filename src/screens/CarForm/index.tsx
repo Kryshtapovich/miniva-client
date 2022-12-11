@@ -8,16 +8,13 @@ import { observer } from 'mobx-react-lite';
 import { Spacer, Button } from '@components/common';
 import { FormImagePicker, FormSelector, FormTextInput } from '@components/form';
 import { useCarForm } from '@utils/hooks/form';
-import { showMessage } from '@utils/helpers';
+import { getEngines, showMessage } from '@utils/helpers';
 import { useStore } from '@store';
 
 import { Field, fields } from './config';
 import { useStyles } from './styles';
 
-const engines = Array.from({ length: 84 }, (_, i) => {
-  const value = i * 100 + 700;
-  return { label: value.toString(), value };
-});
+const engines = getEngines();
 
 function Component() {
   const { setOptions } = useNavigation();
@@ -69,9 +66,6 @@ function Component() {
           />
         );
       }
-      // case 'car_photos': {
-      //   return <FormImagePicker control={control} name={name} error={errors[name]} />;
-      // }
       default:
         return (
           <FormTextInput

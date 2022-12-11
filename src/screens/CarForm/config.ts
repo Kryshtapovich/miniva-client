@@ -42,7 +42,4 @@ export const fields: Array<Field> = [
     label: 'Price ($)',
     keyboardType: 'numeric',
   },
-  // {
-  //   name: 'car_photos',
-  // },
 ];
