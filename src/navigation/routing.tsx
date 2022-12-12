@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, NavigationState } from '@react-navigation/native';
@@ -23,15 +23,12 @@ interface Props {
 export function Navigator(props: Props) {
   const { isAuthorized, role } = props;
 
-  const getRoutes = () => {
-    if (!isAuthorized) return publicRoutes;
-    return role === UserRole.Customer ? customerRoutes : reviewerRoutes;
-  };
-
-  const getInitialRoute = () => {
-    if (!isAuthorized) return RouteNames.signIn;
-    return role === UserRole.Customer ? RouteNames.cars : RouteNames.chats;
-  };
+  const [routes, initialRoute] = useMemo(() => {
+    if (!isAuthorized) return [publicRoutes, RouteNames.signIn];
+    return role === UserRole.Customer
+      ? [customerRoutes, RouteNames.cars]
+      : [reviewerRoutes, RouteNames.chats];
+  }, [isAuthorized, role]);
 
   const [isReady, setIsReady] = useState(false);
   const [initialState, setInitialState] = useState<NavigationState | null>(null);
@@ -51,8 +48,8 @@ export function Navigator(props: Props) {
       initialState={initialState || undefined}
       onStateChange={(state) => persistData('navigation', state)}
     >
-      <Stack.Navigator initialRouteName={getInitialRoute()}>
-        {getRoutes().map(({ name, component, headerShown, canGoBack }) => (
+      <Stack.Navigator initialRouteName={initialRoute}>
+        {routes.map(({ name, component, headerShown, canGoBack }) => (
           <Stack.Screen
             key={name}
             name={name}

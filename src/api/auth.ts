@@ -1,4 +1,4 @@
-import { User } from '@models';
+import { User, UserRole } from '@models';
 
 import { api } from './base';
 
@@ -16,6 +16,6 @@ export const authApi = {
     return api.post<User>('users/login', payload);
   },
   signUp: (payload: SignUpRequest) => {
-    return api.post<User>('users', payload);
+    return api.post<User>('users', { ...payload, role: UserRole.Customer });
   },
 };
