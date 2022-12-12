@@ -46,11 +46,11 @@ function Component() {
     <ScreenContainer containerStyle={styles.container}>
       {user?.role === UserRole.Customer && (
         <Paper>
-          <TouchableOpacity style={styles.menuItem}>
+          {/* <TouchableOpacity style={styles.menuItem} onPress={() => navigate(RouteNames.chat)}>
             <Typography text={'My Posts'} />
             <Icon set={'Feather'} name={'chevron-right'} size={20} />
           </TouchableOpacity>
-          <Divider vertical={'m'} />
+          <Divider vertical={'m'} /> */}
           <TouchableOpacity style={styles.menuItem} onPress={goTo.bind(null, RouteNames.carForm)}>
             <Typography text={'Create Car Post'} />
             <Icon set={'Feather'} name={'chevron-right'} size={20} />

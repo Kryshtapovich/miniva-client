@@ -29,7 +29,7 @@ export interface RouteParamList extends ParamListBase {
   [RouteNames.cars]: undefined;
   [RouteNames.car]: { carId: number };
   [RouteNames.chats]: undefined;
-  [RouteNames.chat]: { chatId: number };
+  [RouteNames.chat]: { carId: number; sender: string; recipient: string } | undefined;
   [RouteNames.profile]: undefined;
   [RouteNames.carForm]: { car: Car } | undefined;
   [RouteNames.carFilter]: undefined;

@@ -5,16 +5,21 @@ import { CarList } from '@components/cars';
 import { useStore } from '@store';
 
 import { useStyles } from './styles';
+import { useScreenEnter } from '@utils/hooks';
 
 function Component() {
   const { carsStore } = useStore();
-  const { cars } = carsStore;
+  const { getFavorites, favorites, toggleFavorite } = carsStore;
 
   const styles = useStyles();
 
+  useScreenEnter(() => {
+    getFavorites();
+  }, []);
+
   return (
     <ScreenContainer disablePaddings containerStyle={styles.conatiner}>
-      <CarList cars={cars} toggleFavorite={Promise.resolve} onRefresh={Promise.resolve} />
+      <CarList cars={favorites} toggleFavorite={toggleFavorite} onRefresh={Promise.resolve} />
     </ScreenContainer>
   );
 }

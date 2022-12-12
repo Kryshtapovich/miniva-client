@@ -4,21 +4,23 @@ import { useNavigation } from '@react-navigation/native';
 
 import { FlashList } from '@shopify/flash-list';
 
-import { Image, ImageCarousel, Paper, Spacer, Typography } from '@components/common';
+import { Icon, Image, ImageCarousel, Paper, Spacer, Typography } from '@components/common';
 import { RouteNames } from '@navigation';
 import { Car } from '@models';
 
 import { useStyles } from './styles';
+import { theme } from '@utils/constants';
 
 interface Props {
   car: Car;
   style?: StyleProp<ViewStyle>;
-  toggleFavorite: (id: number) => Promise<void>;
+  toggleFavorite?: (car: Car) => Promise<void>;
 }
 
 function Component(props: Props) {
-  const { car, style } = props;
-  const { id, model, price, car_photos } = car;
+  const { car, style, toggleFavorite } = props;
+
+  const { id, model, price, car_photos, is_favourite, manufacturer_name } = car;
 
   const { navigate } = useNavigation();
 
@@ -42,9 +44,18 @@ function Component(props: Props) {
     <Paper style={style} onPress={showDetails}>
       <View style={styles.spacedRow}>
         <View style={styles.title}>
+          <Typography style={styles.mainInfo} text={manufacturer_name} />
           <Spacer horizontal={'xs'} />
           <Typography style={styles.mainInfo} text={model} />
         </View>
+        <Pressable onPress={toggleFavorite?.bind(null, car)}>
+          <Icon
+            set={'FontAwesome'}
+            name={is_favourite ? 'star' : 'star-o'}
+            size={25}
+            style={{ color: theme.colors.gold }}
+          />
+        </Pressable>
       </View>
       <Spacer vertical={'s'} />
       <View onStartShouldSetResponder={() => true}>

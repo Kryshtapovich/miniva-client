@@ -2,13 +2,15 @@ import { action, computed, makeObservable, observable, reaction, runInAction } f
 
 import { carsApi } from '@api';
 import { Car, CarFilter } from '@models';
-import { getPersistedData, persistData } from '@utils/helpers';
+import { getPersistedData, persistData, showMessage } from '@utils/helpers';
 
 import { BaseStore } from './base';
 
 export class CarsStore extends BaseStore {
   @observable cars: Array<Car> = [];
+  @observable userCars: Array<Car> = [];
   @observable car: Car | null = null;
+  @observable favorites: Array<Car> = [];
   @observable filter: CarFilter | null = null;
 
   constructor() {
@@ -36,6 +38,63 @@ export class CarsStore extends BaseStore {
       this.errorHandler(e);
     } finally {
       withLoader && this.stopLoading();
+    }
+  };
+
+  @action getUserCars = async () => {
+    this.startLoading();
+    try {
+      const cars = await carsApi.getUserCars();
+      runInAction(() => {
+        this.userCars = cars;
+      });
+    } catch (e) {
+      this.errorHandler(e);
+    } finally {
+      this.stopLoading();
+    }
+  };
+
+  @action getFavorites = async () => {
+    this.startLoading();
+    try {
+      const favorites = await carsApi.getFavorites();
+      runInAction(() => {
+        this.favorites = favorites;
+      });
+    } catch (e) {
+      this.errorHandler(e);
+    } finally {
+      this.stopLoading();
+    }
+  };
+
+  @action toggleFavorite = async ({ id, is_favourite }: Car) => {
+    try {
+      console.log(id, is_favourite);
+      await carsApi.toggleFavorite(!is_favourite, id);
+      runInAction(() => {
+        this.cars = this.cars.map((car) =>
+          car.id === id ? { ...car, is_favourite: !is_favourite } : car,
+        );
+        this.favorites = this.favorites.map((car) =>
+          car.id === id ? { ...car, is_favourite: !is_favourite } : car,
+        );
+      });
+      showMessage({
+        type: 'success',
+        message: `Car has been successfully ${
+          !is_favourite ? 'added to' : 'removed from'
+        } favorites`,
+      });
+    } catch (e) {
+      console.log(e);
+      showMessage({
+        type: 'error',
+        message: `An error occured while ${!is_favourite ? 'adding' : 'removing'} car ${
+          !is_favourite ? 'to' : 'from'
+        } favorites`,
+      });
     }
   };
 

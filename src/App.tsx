@@ -1,5 +1,5 @@
 import { useLayoutEffect } from 'react';
-import { StatusBar } from 'react-native';
+import { LogBox, StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
@@ -12,7 +12,7 @@ import { getPersistedData } from '@utils/helpers';
 import { useStore } from '@store';
 import { User } from '@models';
 import { useApi } from '@api';
-
+LogBox.ignoreAllLogs();
 function Component() {
   const { userStore } = useStore();
   const { init, isAuthorized, user } = userStore;

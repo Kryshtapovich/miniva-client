@@ -12,4 +12,13 @@ export const carsApi = {
   createCar: (payload: Omit<Car, 'id'>) => {
     return api.post<Car>('/cars', payload);
   },
+  getUserCars: () => {
+    return api.get<Array<Car>>('/user-cars');
+  },
+  getFavorites: () => {
+    return api.get<Array<Car>>('/user/favourite-cars');
+  },
+  toggleFavorite: (flag: boolean, carId: number) => {
+    return api[flag ? 'post' : 'delete']('user/favourite-cars', { car_id: carId });
+  },
 };

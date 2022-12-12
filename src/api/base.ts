@@ -27,8 +27,8 @@ export const api = {
     axios.patch<T, AxiosResponse<T>>(url, data, { params }).then(getData).catch(getError),
   put: <T>(url: string, data = {}, params = {}) =>
     axios.put<T, AxiosResponse<T>>(url, data, { params }).then(getData).catch(getError),
-  delete: (url: string, params = {}) =>
-    axios.delete<null, AxiosResponse<null>>(url, { params }).then(getData).catch(getError),
+  delete: (url: string, data = {}) =>
+    axios.delete<null, AxiosResponse<null>>(url, { data }).then(getData).catch(getError),
 };
 
 export const useApi = () => {

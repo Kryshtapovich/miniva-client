@@ -16,6 +16,9 @@ const compileNodeModules = [
   'react-native-vector-icons',
   'react-native-picker-select',
   'react-native-flash-message',
+  'react-native-gifted-chat',
+  'react-native-lightbox',
+  'react-native-parsed-text',
   'react-native-keyboard-aware-scroll-view',
 ].map((module) => path.resolve(root, `node_modules/${module}`));
 

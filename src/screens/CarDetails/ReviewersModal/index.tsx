@@ -1,8 +1,6 @@
-import { Pressable } from 'react-native';
+import { TouchableOpacity } from 'react-native';
 
 import { FlashList } from '@shopify/flash-list';
-
-import { observer } from 'mobx-react-lite';
 
 import { Divider, Modal, Spacer, Typography } from '@components/common';
 import { Reviewer } from '@models';
@@ -13,10 +11,11 @@ interface Props {
   visible: boolean;
   reviewers: Array<Reviewer>;
   setVisible: (value: boolean) => void;
+  onReviewerPressed: (reviewer: Reviewer) => void;
 }
 
-function Component(props: Props) {
-  const { visible, reviewers, setVisible } = props;
+export function ReviewersModal(props: Props) {
+  const { visible, reviewers, setVisible, onReviewerPressed } = props;
 
   const styles = useStyles();
 
@@ -24,11 +23,11 @@ function Component(props: Props) {
     const { username, email } = item;
 
     return (
-      <Pressable style={styles.reviewer}>
+      <TouchableOpacity style={styles.reviewer} onPress={onReviewerPressed.bind(null, item)}>
         <Typography text={username} style={styles.username} />
         <Spacer horizontal={'xs'} />
         <Typography text={email} style={styles.email} />
-      </Pressable>
+      </TouchableOpacity>
     );
   };
 
@@ -47,5 +46,3 @@ function Component(props: Props) {
     </Modal>
   );
 }
-
-export const ReviewersModal = observer(Component);

@@ -15,11 +15,7 @@ import { useScreenEnter } from '@utils/hooks';
 
 function Component() {
   const { carsStore } = useStore();
-  const { cars, loading, getAll, isFilterApplied, toggleFavorite } = carsStore;
-
-  const [isModalVisible, setIsModalVisible] = useState(false);
-
-  const { navigate } = useNavigation();
+  const { userCars, getUserCars } = carsStore;
 
   const styles = useStyles();
 
@@ -27,25 +23,11 @@ function Component() {
     getAll(true);
   }, []);
 
-  const goToFilter = () => {
-    Platform.OS === 'web' ? setIsModalVisible(true) : navigate(RouteNames.carFilter);
-  };
-
   if (loading) return <Spinner />;
 
   return (
     <ScreenContainer disablePaddings containerStyle={styles.container}>
-      <CarList cars={cars} toggleFavorite={toggleFavorite} onRefresh={getAll} />
-      <View>
-        <Button
-          label="Filters"
-          onPress={goToFilter}
-          icon={{ set: 'Feather', name: 'filter' }}
-          style={styles.button}
-        />
-        <View style={styles[isFilterApplied ? 'withFilter' : 'hidden']} />
-      </View>
-      <CarFilterModal visible={isModalVisible} setVisible={setIsModalVisible} />
+      <CarList cars={userCars} toggleFavorite={toggleFavorite} onRefresh={getAll} />
     </ScreenContainer>
   );
 }
