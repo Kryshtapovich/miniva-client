@@ -9,6 +9,7 @@ import { RouteNames, RouteParams } from '@navigation';
 import { dateToLocal } from '@utils/helpers';
 import { useStore } from '@store';
 
+import { ReviewersModal } from './ReviewersModal';
 import { ImageList } from './ImageList';
 import { useStyles } from './styles';
 
@@ -20,12 +21,15 @@ function Component() {
 
   const styles = useStyles();
 
-  const { carsStore } = useStore();
+  const { carsStore, userStore } = useStore();
+  const { reviewers, getReviewers } = userStore;
   const { car, getCar, setCar } = carsStore;
 
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalVisible, setIsModalVisible] = useState(false);
 
   useEffect(() => {
+    getReviewers();
     return () => {
       setCar(null);
     };
@@ -86,7 +90,16 @@ function Component() {
         </View>
         <Spacer vertical={'xxl'} />
       </ScrollView>
-      <Button label="Contact reviewer" onPress={Promise.resolve} style={styles.button} />
+      <Button
+        label="Contact reviewer"
+        onPress={setIsModalVisible.bind(null, true)}
+        style={styles.button}
+      />
+      <ReviewersModal
+        reviewers={reviewers}
+        visible={isModalVisible}
+        setVisible={setIsModalVisible}
+      />
     </View>
   );
 }

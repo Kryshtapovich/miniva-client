@@ -15,6 +15,7 @@ export function EditUserScreen() {
   useLayoutEffect(() => {
     setOptions({
       headerTransparent: true,
+      headerStyle: styles.header,
     });
   }, []);
 

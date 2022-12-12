@@ -1,4 +1,4 @@
-import { User } from '@models';
+import { Reviewer, User } from '@models';
 
 import { api } from './base';
 
@@ -14,5 +14,8 @@ export const userApi = {
   },
   editData: (data: EditUserRequest) => {
     return api.patch<User>('user', data);
+  },
+  getReviewers: () => {
+    return api.get<Array<Reviewer>>('pickers');
   },
 };

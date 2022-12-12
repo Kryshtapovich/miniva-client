@@ -36,7 +36,7 @@ export const useApi = () => {
   const { clear } = userStore;
 
   useEffect(() => {
-    axios.defaults.baseURL = process.env.API_URL;
+    axios.defaults.baseURL = 'http://192.168.100.35:8000';
 
     axios.interceptors.request.use(async (config) => {
       const user = await getPersistedData<User>('user');

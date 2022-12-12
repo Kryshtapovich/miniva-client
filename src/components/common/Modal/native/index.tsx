@@ -14,6 +14,7 @@ export function Modal(props: ModalProps) {
   return (
     <RNModal
       hasBackdrop
+      propagateSwipe
       isVisible={visible}
       statusBarTranslucent
       swipeDirection={'down'}

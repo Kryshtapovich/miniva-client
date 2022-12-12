@@ -1,13 +1,14 @@
-import { action, makeObservable, observable, reaction } from 'mobx';
+import { action, makeObservable, observable, reaction, runInAction } from 'mobx';
 
 import { authApi, userApi } from '@api';
-import { User } from '@models';
+import { Reviewer, User } from '@models';
 import { isTokenExpired, persistData } from '@utils/helpers';
 
 import { BaseStore } from './base';
 
 export class UserStore extends BaseStore {
   @observable user: User | null = null;
+  @observable reviewers: Array<Reviewer> = [];
   @observable isAuthorized = false;
 
   constructor() {
@@ -32,6 +33,20 @@ export class UserStore extends BaseStore {
 
   @action private checkToken = () => {
     this.isAuthorized = !!this.user?.token && !isTokenExpired(this.user.token);
+  };
+
+  @action getReviewers = async () => {
+    this.startLoading();
+    try {
+      const reviewers = await userApi.getReviewers();
+      runInAction(() => {
+        this.reviewers = reviewers;
+      });
+    } catch (e) {
+      this.errorHandler(e);
+    } finally {
+      this.stopLoading();
+    }
   };
 
   @action signIn = async (email: string, password: string) => {

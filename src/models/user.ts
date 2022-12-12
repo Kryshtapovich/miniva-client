@@ -6,3 +6,5 @@ export interface User {
   role: UserRole;
   token: string;
 }
+
+export type Reviewer = Omit<User, 'role'>;
