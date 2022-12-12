@@ -6,6 +6,7 @@ export const useStyles = withStyles(({ theme, insets, createShadow, responsive }
     backgroundColor: theme.colors.white,
     ...responsive({
       web: {
+        width: 95,
         position: 'absolute',
         top: 0,
         bottom: 0,

@@ -3,26 +3,35 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, NavigationState } from '@react-navigation/native';
 
+import { UserRole } from '@models';
 import { Icon } from '@components/common';
 import { persistData, getPersistedData } from '@utils/helpers';
 
 import { TabBar } from './TabBar';
 import { Header } from './Header';
 import { RouteNames, RouteParamList } from './types';
-import { privateRoutes, publicRoutes, TabRoute, linking } from './config';
+import { customerRoutes, reviewerRoutes, publicRoutes, TabRoute, linking } from './config';
 
 const Stack = createNativeStackNavigator<RouteParamList>();
 const BottomTab = createBottomTabNavigator<RouteParamList>();
 
 interface Props {
   isAuthorized: boolean;
+  role?: UserRole;
 }
 
 export function Navigator(props: Props) {
-  const { isAuthorized } = props;
+  const { isAuthorized, role } = props;
 
-  const routes = isAuthorized ? privateRoutes : publicRoutes;
-  const initialRoute = isAuthorized ? RouteNames.cars : RouteNames.signIn;
+  const getRoutes = () => {
+    if (!isAuthorized) return publicRoutes;
+    return role === UserRole.Customer ? customerRoutes : reviewerRoutes;
+  };
+
+  const getInitialRoute = () => {
+    if (!isAuthorized) return RouteNames.signIn;
+    return role === UserRole.Customer ? RouteNames.cars : RouteNames.chats;
+  };
 
   const [isReady, setIsReady] = useState(false);
   const [initialState, setInitialState] = useState<NavigationState | null>(null);
@@ -42,8 +51,8 @@ export function Navigator(props: Props) {
       initialState={initialState || undefined}
       onStateChange={(state) => persistData('navigation', state)}
     >
-      <Stack.Navigator initialRouteName={initialRoute}>
-        {routes.map(({ name, component, headerShown, canGoBack }) => (
+      <Stack.Navigator initialRouteName={getInitialRoute()}>
+        {getRoutes().map(({ name, component, headerShown, canGoBack }) => (
           <Stack.Screen
             key={name}
             name={name}

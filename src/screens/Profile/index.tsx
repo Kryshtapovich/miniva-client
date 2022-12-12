@@ -1,5 +1,8 @@
+import { useState } from 'react';
 import { Platform, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+
+import { observer } from 'mobx-react-lite';
 
 import {
   Button,
@@ -10,19 +13,19 @@ import {
   Spacer,
   Typography,
 } from '@components/common';
-import { RouteNames } from '@navigation';
-import { removePersistedData } from '@utils/helpers';
 import { useStore } from '@store';
+import { UserRole } from '@models';
+import { RouteNames } from '@navigation';
+import { EditUserModal } from '@screens';
+import { removePersistedData } from '@utils/helpers';
 
 import { useStyles } from './styles';
-import { EditUserModal } from '@screens';
-import { useState } from 'react';
 
-export function ProfileScreen() {
+function Component() {
   const styles = useStyles();
   const { navigate } = useNavigation();
   const { userStore } = useStore();
-  const { clear } = userStore;
+  const { user, clear } = userStore;
 
   const [isModalVisible, setIsModalVisible] = useState(false);
 
@@ -41,18 +44,20 @@ export function ProfileScreen() {
 
   return (
     <ScreenContainer containerStyle={styles.container}>
-      <Paper>
-        <TouchableOpacity style={styles.menuItem}>
-          <Typography text={'My Posts'} />
-          <Icon set={'Feather'} name={'chevron-right'} size={20} />
-        </TouchableOpacity>
-        <Divider vertical={'m'} />
-        <TouchableOpacity style={styles.menuItem} onPress={goTo.bind(null, RouteNames.carForm)}>
-          <Typography text={'Create Car Post'} />
-          <Icon set={'Feather'} name={'chevron-right'} size={20} />
-        </TouchableOpacity>
-      </Paper>
-      <Spacer vertical={'m'} />
+      {user?.role === UserRole.Customer && (
+        <Paper>
+          <TouchableOpacity style={styles.menuItem}>
+            <Typography text={'My Posts'} />
+            <Icon set={'Feather'} name={'chevron-right'} size={20} />
+          </TouchableOpacity>
+          <Divider vertical={'m'} />
+          <TouchableOpacity style={styles.menuItem} onPress={goTo.bind(null, RouteNames.carForm)}>
+            <Typography text={'Create Car Post'} />
+            <Icon set={'Feather'} name={'chevron-right'} size={20} />
+          </TouchableOpacity>
+        </Paper>
+      )}
+      <Spacer vertical={'s'} />
       <Paper>
         <TouchableOpacity style={styles.menuItem} onPress={goToEdit}>
           <Typography text={'Edit info'} />
@@ -67,3 +72,5 @@ export function ProfileScreen() {
     </ScreenContainer>
   );
 }
+
+export const ProfileScreen = observer(Component);

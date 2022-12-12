@@ -15,7 +15,7 @@ import { useApi } from '@api';
 
 function Component() {
   const { userStore } = useStore();
-  const { init, isAuthorized } = userStore;
+  const { init, isAuthorized, user } = userStore;
 
   useApi();
 
@@ -28,7 +28,7 @@ function Component() {
   return (
     <SafeAreaProvider>
       <StatusBar barStyle={'dark-content'} backgroundColor={theme.colors.white} />
-      <Navigator isAuthorized={isAuthorized} />
+      <Navigator isAuthorized={isAuthorized} role={user?.role} />
       <MessageContainer />
     </SafeAreaProvider>
   );

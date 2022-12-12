@@ -1,5 +1,7 @@
 import { ComponentProps } from 'react';
 
+import { LinkingOptions } from '@react-navigation/native';
+
 import { Icon } from '@components/common';
 import {
   CarDetailsScreen,
@@ -16,7 +18,6 @@ import {
 } from '@screens';
 
 import { RouteNames, RouteParamList } from './types';
-import { LinkingOptions } from '@react-navigation/native';
 
 interface Route {
   name: RouteNames;
@@ -48,7 +49,43 @@ export const publicRoutes: Array<StackRoute> = [
   },
 ];
 
-export const privateRoutes: Array<StackRoute> = [
+export const reviewerRoutes: Array<StackRoute> = [
+  {
+    name: RouteNames.root,
+    headerShown: false,
+    canGoBack: false,
+    component: [
+      {
+        name: RouteNames.chats,
+        headerShown: true,
+        canGoBack: false,
+        component: ChatsScreen,
+        icon: { set: 'Entypo', name: 'chat' },
+      },
+      {
+        name: RouteNames.profile,
+        headerShown: true,
+        canGoBack: false,
+        component: ProfileScreen,
+        icon: { set: 'FontAwesome5', name: 'user-circle' },
+      },
+    ],
+  },
+  {
+    name: RouteNames.chat,
+    headerShown: false,
+    canGoBack: false,
+    component: ChatDetailsScreen,
+  },
+  {
+    name: RouteNames.editUser,
+    headerShown: true,
+    canGoBack: true,
+    component: EditUserScreen,
+  },
+];
+
+export const customerRoutes: Array<StackRoute> = [
   {
     name: RouteNames.root,
     headerShown: false,
