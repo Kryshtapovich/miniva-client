@@ -1,7 +1,8 @@
-import { action, computed, makeObservable, observable, runInAction } from 'mobx';
+import { action, computed, makeObservable, observable, reaction, runInAction } from 'mobx';
 
 import { carsApi } from '@api';
 import { Car, CarFilter } from '@models';
+import { getPersistedData, persistData } from '@utils/helpers';
 
 import { BaseStore } from './base';
 
@@ -13,6 +14,11 @@ export class CarsStore extends BaseStore {
   constructor() {
     super();
     makeObservable(this);
+    getPersistedData<CarFilter>('filter').then(this.setFilter);
+    reaction(
+      () => this.filter,
+      (filter) => persistData('filter', filter),
+    );
   }
 
   @computed get isFilterApplied() {
@@ -22,7 +28,7 @@ export class CarsStore extends BaseStore {
   @action getAll = async (withLoader?: boolean) => {
     withLoader && this.startLoading();
     try {
-      const cars = await carsApi.getAll();
+      const cars = await carsApi.getAll(this.filter || undefined);
       runInAction(() => {
         this.cars = cars;
       });
@@ -57,15 +63,17 @@ export class CarsStore extends BaseStore {
     }
   };
 
+  @action private setFilter = (filter: CarFilter | null) => {
+    this.filter = filter;
+  };
+
   @action filterCars = async (filter: CarFilter) => {
-    runInAction(() => {
-      this.filter = filter;
-    });
     this.startLoading();
     try {
       const reducedFilter = Object.fromEntries(
         Object.entries(filter).filter(([_, value]) => !!value),
       );
+      this.setFilter(reducedFilter);
       const cars = await carsApi.getAll(reducedFilter);
       runInAction(() => {
         this.cars = cars;
