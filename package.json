@@ -11,7 +11,8 @@
     "link": "react-native link",
     "lint": "eslint . --ext .js,.jsx,.ts,.tsx",
     "assets": "npx react-native-asset",
-    "pods": "cd ios && pod install && cd .."
+    "pods": "cd ios && pod install && cd ..",
+    "build:android": "react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res"
   },
   "dependencies": {
     "@hookform/resolvers": "^2.9.10",
