@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@components/common';
 import { RouteNames } from '@navigation';
-import { removeUser } from '@utils/helpers';
+import { removePersistedData } from '@utils/helpers';
 import { useStore } from '@store';
 
 import { useStyles } from './styles';
@@ -27,7 +27,7 @@ export function ProfileScreen() {
   };
 
   const logOut = () => {
-    removeUser();
+    removePersistedData('user');
     clear();
   };
 

@@ -7,7 +7,7 @@ import { Typography, Spacer, Button, ScreenContainer, KeyboardContainer } from '
 import { FormTextInput } from '@components/form';
 import { useSignInForm } from '@utils/hooks/form';
 import { useScreenEnter } from '@utils/hooks';
-import { setUser } from '@utils/helpers';
+import { persistData } from '@utils/helpers';
 import { RouteNames } from '@navigation';
 import { useStore } from '@store';
 
@@ -32,7 +32,7 @@ function Component() {
     Keyboard.dismiss();
     const { email, password } = data;
     const user = await signIn(email, password);
-    user && setUser(user);
+    user && persistData('user', user);
   });
 
   return (

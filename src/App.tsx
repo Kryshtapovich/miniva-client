@@ -8,8 +8,9 @@ import { observer } from 'mobx-react-lite';
 import { MessageContainer } from '@components/common';
 import { Navigator } from '@navigation';
 import { theme } from '@utils/constants';
-import { getUser } from '@utils/helpers';
+import { getPersistedData } from '@utils/helpers';
 import { useStore } from '@store';
+import { User } from '@models';
 import { useApi } from '@api';
 
 function Component() {
@@ -19,7 +20,7 @@ function Component() {
   useApi();
 
   useLayoutEffect(() => {
-    getUser()
+    getPersistedData<User>('user')
       .then(init)
       .then(() => SplashScreen?.hide());
   }, []);

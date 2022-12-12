@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { NavigationContainer, NavigationState } from '@react-navigation/native';
 
 import { Icon } from '@components/common';
-import { persistNavigationState, getNavigationState } from '@utils/helpers';
+import { persistData, getPersistedData } from '@utils/helpers';
 
 import { TabBar } from './TabBar';
 import { Header } from './Header';
@@ -25,11 +25,11 @@ export function Navigator(props: Props) {
   const initialRoute = isAuthorized ? RouteNames.cars : RouteNames.signIn;
 
   const [isReady, setIsReady] = useState(false);
-  const [initialState, setInitialState] = useState<NavigationState>();
+  const [initialState, setInitialState] = useState<NavigationState | null>(null);
 
   useEffect(() => {
     setIsReady(false);
-    getNavigationState()
+    getPersistedData<NavigationState>('navigation')
       .then(setInitialState)
       .finally(() => setIsReady(true));
   }, []);
@@ -39,8 +39,8 @@ export function Navigator(props: Props) {
   return (
     <NavigationContainer
       linking={linking}
-      initialState={initialState}
-      onStateChange={persistNavigationState}
+      initialState={initialState || undefined}
+      onStateChange={(state) => persistData('navigation', state)}
     >
       <Stack.Navigator initialRouteName={initialRoute}>
         {routes.map(({ name, component, headerShown, canGoBack }) => (

@@ -2,8 +2,9 @@ import { useEffect } from 'react';
 
 import axios, { AxiosError, AxiosResponse } from 'axios';
 
-import { getUser, isTokenExpired, showMessage } from '@utils/helpers';
+import { getPersistedData, isTokenExpired, showMessage } from '@utils/helpers';
 import { useStore } from '@store';
+import { User } from '@models';
 
 const getData = <T>(response: AxiosResponse<T>): T => {
   return response.data;
@@ -38,7 +39,7 @@ export const useApi = () => {
     axios.defaults.baseURL = process.env.API_URL;
 
     axios.interceptors.request.use(async (config) => {
-      const user = await getUser();
+      const user = await getPersistedData<User>('user');
       if (user?.token && !isTokenExpired(user.token) && config.headers) {
         config.headers['Authorization'] = `Bearer ${user.token}`;
       }
