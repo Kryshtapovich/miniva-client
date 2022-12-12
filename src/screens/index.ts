@@ -8,3 +8,4 @@ export { SignUpScreen } from './SignUp';
 export { CarFormScreen } from './CarForm';
 export { FavoritesScreen } from './Favorites';
 export { CarFilterScreen } from './CarFilter/screen';
+export * from './EditUser';

@@ -20,6 +20,7 @@ export enum RouteNames {
   profile = 'Profile',
   carForm = 'Create Post',
   carFilter = 'Car Filter',
+  editUser = 'Edit User',
 }
 
 export type RouteParams<T extends keyof RouteParamList> = RouteProp<RouteParamList, T>;
@@ -32,4 +33,5 @@ export interface RouteParamList extends ParamListBase {
   [RouteNames.profile]: undefined;
   [RouteNames.carForm]: { car: Car } | undefined;
   [RouteNames.carFilter]: undefined;
+  [RouteNames.editUser]: undefined;
 }

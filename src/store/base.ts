@@ -31,7 +31,7 @@ export class BaseStore {
     }
   };
 
-  @action protected clearErrors = () => {
+  @action clearErrors = () => {
     this.errorsArr = null;
   };
 }

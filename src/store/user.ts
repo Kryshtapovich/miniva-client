@@ -2,7 +2,7 @@ import { action, makeObservable, observable, reaction } from 'mobx';
 
 import { authApi, userApi } from '@api';
 import { User } from '@models';
-import { isTokenExpired } from '@utils/helpers';
+import { isTokenExpired, persistData } from '@utils/helpers';
 
 import { BaseStore } from './base';
 
@@ -18,7 +18,7 @@ export class UserStore extends BaseStore {
 
   @action init = (user: User | null) => {
     this.user = user;
-    this.checkToken();
+    persistData('user', user);
   };
 
   @action getUserData = async () => {
@@ -39,12 +39,10 @@ export class UserStore extends BaseStore {
     try {
       const user = await authApi.signIn({ email, password });
       this.init(user);
-      this.stopLoading();
-      return user;
     } catch (e) {
-      this.stopLoading();
       this.errorHandler(e);
-      return null;
+    } finally {
+      this.stopLoading();
     }
   };
 
@@ -53,12 +51,26 @@ export class UserStore extends BaseStore {
     try {
       const user = await authApi.signUp({ username, email, password });
       this.init(user);
-      this.stopLoading();
-      return user;
     } catch (e) {
-      this.stopLoading();
       this.errorHandler(e);
-      return null;
+    } finally {
+      this.stopLoading();
+    }
+  };
+
+  @action editUser = async (username: string, email: string, password: string) => {
+    this.startLoading();
+    try {
+      const payload = Object.fromEntries(
+        Object.entries({ username, email, password }).filter(([_, value]) => !!value),
+      );
+      const user = await userApi.editData(payload);
+      this.init(user);
+    } catch (e) {
+      this.errorHandler(e);
+      throw e;
+    } finally {
+      this.stopLoading();
     }
   };
 

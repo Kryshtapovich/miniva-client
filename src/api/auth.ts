@@ -1,7 +1,15 @@
 import { User } from '@models';
 
-import { api } from '../base';
-import { SignUpRequest, SignInRequest } from './types';
+import { api } from './base';
+
+interface SignInRequest {
+  email: string;
+  password: string;
+}
+
+interface SignUpRequest extends SignInRequest {
+  username: string;
+}
 
 export const authApi = {
   signIn: (payload: SignInRequest) => {

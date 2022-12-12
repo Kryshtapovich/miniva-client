@@ -7,7 +7,6 @@ import { Typography, Spacer, Button, ScreenContainer, KeyboardContainer } from '
 import { FormTextInput } from '@components/form';
 import { useSignInForm } from '@utils/hooks/form';
 import { useScreenEnter } from '@utils/hooks';
-import { persistData } from '@utils/helpers';
 import { RouteNames } from '@navigation';
 import { useStore } from '@store';
 
@@ -28,11 +27,10 @@ function Component() {
     navigate(RouteNames.signUp);
   };
 
-  const submit = onSubmit(async (data) => {
+  const submit = onSubmit((data) => {
     Keyboard.dismiss();
     const { email, password } = data;
-    const user = await signIn(email, password);
-    user && persistData('user', user);
+    signIn(email, password);
   });
 
   return (

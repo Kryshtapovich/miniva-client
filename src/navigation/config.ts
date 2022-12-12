@@ -12,6 +12,7 @@ import {
   CarFormScreen,
   CarFilterScreen,
   FavoritesScreen,
+  EditUserScreen,
 } from '@screens';
 
 import { RouteNames, RouteParamList } from './types';
@@ -107,6 +108,12 @@ export const privateRoutes: Array<StackRoute> = [
     canGoBack: false,
     component: CarFilterScreen,
   },
+  {
+    name: RouteNames.editUser,
+    headerShown: true,
+    canGoBack: true,
+    component: EditUserScreen,
+  },
 ];
 
 export const linking: LinkingOptions<RouteParamList> = {
@@ -123,7 +130,6 @@ export const linking: LinkingOptions<RouteParamList> = {
       [RouteNames.signIn]: 'sign-in',
       [RouteNames.signUp]: 'sign-up',
       [RouteNames.carForm]: 'car-form',
-      [RouteNames.carFilter]: 'filter',
       [RouteNames.car]: 'car/:carId',
     },
   },

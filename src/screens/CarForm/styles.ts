@@ -8,7 +8,6 @@ export const useStyles = withStyles(({ theme, insets, responsive }) => ({
     paddingBottom: insets.bottom || theme.spacing.m,
   },
   header: {
-    marginBottom: theme.spacing.m,
     marginLeft: 0,
   },
   field: {
