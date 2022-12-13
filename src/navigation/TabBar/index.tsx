@@ -8,6 +8,7 @@ import { useStyles } from './styles';
 
 export function TabBar(props: BottomTabBarProps) {
   const { state, descriptors, navigation } = props;
+
   const styles = useStyles();
 
   return (

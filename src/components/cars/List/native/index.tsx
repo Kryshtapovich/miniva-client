@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { RefreshControl } from 'react-native';
+import { Platform, RefreshControl } from 'react-native';
 
 import { FlashList } from '@shopify/flash-list';
 
@@ -59,9 +59,9 @@ export function CarList(props: CarListProps) {
           tintColor={theme.colors.orange}
         />
       }
-      showsVerticalScrollIndicator={false}
       ItemSeparatorComponent={getSeparator}
       ListEmptyComponent={getEmptyComponent}
+      showsVerticalScrollIndicator={Platform.OS === 'web'}
       contentContainerStyle={!cars.length ? styles.empty : undefined}
     />
   );

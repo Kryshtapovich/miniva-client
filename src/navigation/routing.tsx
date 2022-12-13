@@ -25,6 +25,7 @@ export function Navigator(props: Props) {
 
   const [routes, initialRoute] = useMemo(() => {
     if (!isAuthorized) return [publicRoutes, RouteNames.signIn];
+
     return role === UserRole.Customer
       ? [customerRoutes, RouteNames.cars]
       : [reviewerRoutes, RouteNames.chats];

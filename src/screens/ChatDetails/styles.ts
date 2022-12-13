@@ -7,4 +7,8 @@ export const useStyles = withStyles(({ theme }) => ({
   right: {
     backgroundColor: theme.colors.green,
   },
+  actions: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 }));

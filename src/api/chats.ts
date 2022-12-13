@@ -14,6 +14,7 @@ interface ChatDto {
 export const chatsApi = {
   getUserChats: async () => {
     const chatsDtos = await api.get<Array<ChatDto>>('conversations');
+
     return Promise.all(
       chatsDtos
         .filter(({ last_message }) => !!last_message)

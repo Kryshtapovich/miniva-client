@@ -72,6 +72,12 @@ export const reviewerRoutes: Array<StackRoute> = [
     ],
   },
   {
+    name: RouteNames.car,
+    headerShown: false,
+    canGoBack: false,
+    component: CarDetailsScreen,
+  },
+  {
     name: RouteNames.chat,
     headerShown: false,
     canGoBack: false,

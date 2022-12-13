@@ -1,18 +1,18 @@
 import { useLayoutEffect } from 'react';
-import { LogBox, StatusBar } from 'react-native';
+import { StatusBar } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import SplashScreen from 'react-native-splash-screen';
 
 import { observer } from 'mobx-react-lite';
 
 import { MessageContainer } from '@components/common';
-import { Navigator } from '@navigation';
-import { theme } from '@utils/constants';
 import { getPersistedData } from '@utils/helpers';
+import { theme } from '@utils/constants';
+import { Navigator } from '@navigation';
 import { useStore } from '@store';
 import { User } from '@models';
 import { useApi } from '@api';
-LogBox.ignoreAllLogs();
+
 function Component() {
   const { userStore } = useStore();
   const { init, isAuthorized, user } = userStore;

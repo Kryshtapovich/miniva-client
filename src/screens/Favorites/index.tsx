@@ -1,15 +1,15 @@
 import { observer } from 'mobx-react-lite';
 
-import { ScreenContainer } from '@components/common';
+import { ScreenContainer, Spinner } from '@components/common';
+import { useScreenEnter } from '@utils/hooks';
 import { CarList } from '@components/cars';
 import { useStore } from '@store';
 
 import { useStyles } from './styles';
-import { useScreenEnter } from '@utils/hooks';
 
 function Component() {
   const { carsStore } = useStore();
-  const { getFavorites, favorites, toggleFavorite } = carsStore;
+  const { getFavorites, cars, toggleFavorite, loading } = carsStore;
 
   const styles = useStyles();
 
@@ -17,9 +17,11 @@ function Component() {
     getFavorites();
   }, []);
 
+  if (loading) return <Spinner />;
+
   return (
     <ScreenContainer disablePaddings containerStyle={styles.conatiner}>
-      <CarList cars={favorites} toggleFavorite={toggleFavorite} onRefresh={Promise.resolve} />
+      <CarList cars={cars} toggleFavorite={toggleFavorite} onRefresh={getFavorites} />
     </ScreenContainer>
   );
 }

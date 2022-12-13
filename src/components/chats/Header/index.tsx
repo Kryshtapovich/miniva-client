@@ -1,8 +1,10 @@
-import { IconButton, Spacer, Typography } from '@components/common';
+import { Pressable, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
+
 import { Car } from '@models';
 import { RouteNames } from '@navigation';
-import { useNavigation } from '@react-navigation/native';
-import { Pressable, View } from 'react-native';
+import { IconButton, Spacer, Typography } from '@components/common';
+
 import { useStyles } from './styles';
 
 interface Props {

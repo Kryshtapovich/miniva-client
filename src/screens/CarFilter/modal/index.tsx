@@ -1,11 +1,12 @@
 import { View } from 'react-native';
 
+import { observer } from 'mobx-react-lite';
+
 import { IconButton, Modal, Typography } from '@components/common';
 import { useStore } from '@store';
 
 import { CarFilterContent } from '../content';
 import { useStyles } from './styles';
-import { observer } from 'mobx-react-lite';
 
 interface Props {
   visible: boolean;

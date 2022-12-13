@@ -1,14 +1,10 @@
 import { useState } from 'react';
-import { ImageStyle, Platform, Pressable, View } from 'react-native';
-import {
-  launchCamera,
-  launchImageLibrary,
-  ImageLibraryOptions,
-  ImagePickerResponse,
-} from 'react-native-image-picker';
+import { ImageStyle, Pressable, View } from 'react-native';
+
 import { FlashList } from '@shopify/flash-list';
 
 import { Icon, Image, Spacer, Button, Modal } from '@components/common';
+import { chooseImages, takePhoto } from '@utils/helpers';
 
 import { ImagePickerProps } from '../types';
 import { useStyles } from './styles';
@@ -20,21 +16,10 @@ export function ImagePicker(props: ImagePickerProps) {
 
   const styles = useStyles();
 
-  const togglePhotos = async (
-    callback: (options: ImageLibraryOptions) => Promise<ImagePickerResponse>,
-  ) => {
+  const togglePhotos = async (type: 'library' | 'photo') => {
     setIsModalOpen(false);
     setTimeout(async () => {
-      const { assets } = await callback({
-        mediaType: 'photo',
-        includeBase64: true,
-        selectionLimit: 0,
-        quality: 0.5,
-      });
-      if (assets) {
-        const data = assets.map(({ base64 }) => 'data:image/png;base64,' + base64);
-        onAdd(data);
-      }
+      await (type === 'photo' ? takePhoto(onAdd) : chooseImages(true, onAdd));
     }, 400);
   };
 
@@ -53,11 +38,7 @@ export function ImagePicker(props: ImagePickerProps) {
 
   const renderFooter = () => (
     <Pressable
-      onPress={
-        Platform.OS === 'web'
-          ? togglePhotos.bind(null, launchImageLibrary)
-          : setIsModalOpen.bind(null, !isModalOpen)
-      }
+      onPress={setIsModalOpen.bind(null, !isModalOpen)}
       style={[styles.button, !!photos.length && styles.notEmpty]}
     >
       <Icon set={'Feather'} name={'camera'} size={40} style={styles.cameraIcon} />
@@ -76,9 +57,9 @@ export function ImagePicker(props: ImagePickerProps) {
         ItemSeparatorComponent={renderSeparator}
       />
       <Modal visible={isModalOpen} setVisible={setIsModalOpen}>
-        <Button label="Take a photo" onPress={togglePhotos.bind(null, launchCamera)} />
+        <Button label="Take a photo" onPress={togglePhotos.bind(null, 'photo')} />
         <Spacer vertical={'s'} />
-        <Button label="Open photo library" onPress={togglePhotos.bind(null, launchImageLibrary)} />
+        <Button label="Open photo library" onPress={togglePhotos.bind(null, 'library')} />
       </Modal>
     </>
   );

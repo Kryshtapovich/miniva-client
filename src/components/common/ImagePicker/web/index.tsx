@@ -1,7 +1,7 @@
 import { ImageStyle, Pressable, View } from 'react-native';
-import { launchImageLibrary } from 'react-native-image-picker';
 
 import { Icon, Image } from '@components/common';
+import { chooseImages } from '@utils/helpers';
 
 import { ImagePickerProps } from '../types';
 import { useStyles } from './styles';
@@ -10,19 +10,6 @@ export function ImagePicker(props: ImagePickerProps) {
   const { photos, onAdd, onRemove } = props;
 
   const styles = useStyles();
-
-  const togglePhotos = async () => {
-    const { assets } = await launchImageLibrary({
-      mediaType: 'photo',
-      includeBase64: true,
-      selectionLimit: 0,
-      quality: 0.5,
-    });
-    if (assets) {
-      const data = assets.map(({ base64 }) => 'data:image/png;base64,' + base64);
-      onAdd(data);
-    }
-  };
 
   const renderItem = ({ item, index }: { item: string; index: number }) => (
     <View>
@@ -34,7 +21,7 @@ export function ImagePicker(props: ImagePickerProps) {
   );
 
   const renderFooter = () => (
-    <Pressable onPress={togglePhotos} style={styles.button}>
+    <Pressable onPress={chooseImages.bind(null, true, onAdd)} style={styles.button}>
       <Icon set={'Feather'} name={'camera'} size={40} style={styles.cameraIcon} />
     </Pressable>
   );

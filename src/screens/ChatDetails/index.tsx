@@ -1,29 +1,24 @@
 import { useState, useCallback, useEffect } from 'react';
+import { Linking, Platform } from 'react-native';
 import { GiftedChat, Actions, IMessage, Bubble, BubbleProps } from 'react-native-gifted-chat';
 import { useRoute } from '@react-navigation/native';
 
 import { observer } from 'mobx-react-lite';
 
-import { useStore } from '@store';
-import { RouteNames, RouteParams } from '@navigation';
-
-import { ChatHeader } from './Header';
-import { useStyles } from './styles';
-import { ChatEvent, MessageType, UserRole } from '@models';
-import { Icon, Spinner } from '@components/common';
-import { Linking, Platform } from 'react-native';
-import {
-  ImageLibraryOptions,
-  ImagePickerResponse,
-  launchCamera,
-  launchImageLibrary,
-} from 'react-native-image-picker';
 import { paymentApi } from '@api';
+import { useStore } from '@store';
+import { useWebSocket } from '@utils/hooks';
+import { ChatHeader } from '@components/chats';
+import { Icon, Spinner } from '@components/common';
+import { RouteNames, RouteParams } from '@navigation';
+import { chooseImages, takePhoto } from '@utils/helpers';
+import { ChatEvent, MessageType, UserRole } from '@models';
 
-let ws: WebSocket | null = null;
+import { useStyles } from './styles';
 
 function Component() {
   const { params } = useRoute<RouteParams<RouteNames.chat>>();
+  const { carId, sender, recipient } = params!;
 
   const { carsStore, userStore } = useStore();
   const { user } = userStore;
@@ -31,74 +26,58 @@ function Component() {
 
   const [messages, setMessages] = useState<Array<IMessage>>([]);
 
+  const { connect, disconnect, send } = useWebSocket();
+
   const styles = useStyles();
 
   useEffect(() => {
-    if (params) {
-      const { carId, sender, recipient } = params;
+    getCar(carId);
 
-      getCar(carId);
-
-      if (user && !ws) {
-        ws = new WebSocket(
-          `${process.env.WS_URL}/${sender}__${recipient}/?car_id=${carId}&token=${user.token}`,
-        );
-        ws.onmessage = ({ data }) => {
-          const event = JSON.parse(data) as ChatEvent;
-
-          switch (event.type) {
-            case MessageType.Last: {
-              const { messages } = event;
-
-              setMessages(
-                messages.map(({ id, content, timestamp, from_user, attached_photo }) => ({
-                  _id: id,
-                  text: content,
-                  createdAt: new Date(timestamp),
-                  image: attached_photo,
-                  user: { _id: from_user.username },
-                })),
-              );
-              break;
-            }
-            case MessageType.Chat: {
-              const { message } = event;
-              if (message.from_user.username === user.username) return;
-
-              const chatMessage: IMessage = {
-                _id: message.id,
-                createdAt: new Date(message.timestamp),
-                text: message.content,
-                user: { _id: message.from_user.username },
-              };
-              setMessages((prev) => GiftedChat.append(prev, [chatMessage]));
-              break;
-            }
+    connect<ChatEvent>(
+      `${process.env.WS_URL}/${sender}__${recipient}/?car_id=${carId}&token=${user!.token}`,
+      (event) => {
+        switch (event.type) {
+          case MessageType.Last: {
+            const { messages } = event;
+            const chatMessages = messages.map<IMessage>(
+              ({ id, content, timestamp, from_user, attached_photo }) => ({
+                _id: id,
+                text: content,
+                image: attached_photo,
+                createdAt: new Date(timestamp),
+                user: { _id: from_user.username },
+              }),
+            );
+            setMessages(chatMessages);
+            break;
           }
-        };
-      }
-    }
-  }, [params]);
+          case MessageType.Chat: {
+            const { message } = event;
+            const chatMessage: IMessage = {
+              _id: message.id,
+              createdAt: new Date(message.timestamp),
+              text: message.content,
+              image: message.attached_photo,
+              user: { _id: message.from_user.username },
+            };
+            setMessages((prev) => GiftedChat.append(prev, [chatMessage]));
+            break;
+          }
+        }
+      },
+    );
 
-  useEffect(() => {
-    return () => {
-      ws?.close();
-      ws = null;
-    };
+    return disconnect;
   }, []);
 
   const onSend = useCallback((messages: Array<IMessage>) => {
-    if (params) {
-      const { sender, recipient } = params;
-      setMessages((previousMessages) => GiftedChat.append(previousMessages, messages));
-      const [message] = messages;
-      const payload = {
-        type: 'chat_message',
-        name: `${sender}__${recipient}`,
-        message: message.text,
-      };
-      ws?.send(JSON.stringify(payload));
-    }
+    const [message] = messages;
+    const payload = {
+      type: 'chat_message',
+      name: `${sender}__${recipient}`,
+      message: message.text,
+    };
+    send(payload);
   }, []);
 
   const renderBubble = (bubble: BubbleProps<IMessage>) => {
@@ -106,73 +85,34 @@ function Component() {
   };
 
   const renderActions = () => {
-    const pickImage = async (
-      callback: (options: ImageLibraryOptions) => Promise<ImagePickerResponse>,
-    ) => {
-      const { assets } = await callback({
-        mediaType: 'photo',
-        includeBase64: true,
-        quality: 0.5,
-      });
-      if (assets && params && user) {
-        const { sender, recipient } = params;
-        const [image] = assets;
+    const onImagesLoad = (images: Array<string>) => {
+      const [image] = images;
+      const { sender, recipient } = params!;
 
-        const message: IMessage = {
-          _id: Math.random(),
-          image: 'data:image/png;base64,' + image.base64,
-          text: '',
-          createdAt: new Date(),
-          user: { _id: user?.username },
-        };
-        setMessages((prev) => GiftedChat.append(prev, [message]));
-
-        const payload = {
-          type: 'chat_message',
-          name: `${sender}__${recipient}`,
-          message: '',
-          attached_photo: 'data:image/png;base64,' + image.base64,
-        };
-        ws?.send(JSON.stringify(payload));
-      }
+      const payload = {
+        type: MessageType.Chat,
+        name: `${sender}__${recipient}`,
+        message: '',
+        attached_photo: image,
+      };
+      send(payload);
     };
 
-    const options =
-      Platform.OS === 'web'
-        ? {
-            'Choose photo from Library': () => pickImage(launchImageLibrary),
-            ...(user?.role === UserRole.Customer
-              ? {
-                  Pay: () => {
-                    params &&
-                      paymentApi
-                        .getPage(params.carId)
-                        .then(({ redirect_url }) => Linking.openURL(redirect_url));
-                  },
-                }
-              : undefined),
-            Close: () => {},
-          }
-        : {
-            'Choose photo from Library': pickImage,
-            'Take photo': () => pickImage(launchCamera),
-            ...(user?.role === UserRole.Customer
-              ? {
-                  Pay: () => {
-                    params &&
-                      paymentApi
-                        .getPage(params.carId)
-                        .then(({ redirect_url }) => Linking.openURL(redirect_url));
-                  },
-                }
-              : undefined),
-            Close: () => {},
-          };
+    const onPay = async () => {
+      const { redirect_url } = await paymentApi.getPage(carId);
+      Linking.openURL(redirect_url);
+    };
+
+    const options = Object.assign(
+      { 'Choose photo from Library': chooseImages.bind(null, false, onImagesLoad) },
+      Platform.OS !== 'web' && { 'Take photo': takePhoto.bind(null, onImagesLoad) },
+      user!.role === UserRole.Customer && { Pay: onPay },
+    );
 
     return (
       <Actions
-        wrapperStyle={{ justifyContent: 'center', alignItems: 'center' }}
         options={options}
+        wrapperStyle={styles.actions}
         icon={() => <Icon set="Entypo" name="dots-three-vertical" size={25} />}
       />
     );
@@ -184,12 +124,12 @@ function Component() {
       <GiftedChat
         scrollToBottom
         onSend={onSend}
-        renderLoading={() => <Spinner />}
         messages={messages}
-        user={{ _id: user?.username || 1 }}
-        renderBubble={renderBubble}
         renderAvatar={null as any}
+        renderBubble={renderBubble}
         renderActions={renderActions}
+        user={{ _id: user!.username }}
+        renderLoading={() => <Spinner />}
       />
     </>
   );

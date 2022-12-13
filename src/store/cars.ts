@@ -8,9 +8,7 @@ import { BaseStore } from './base';
 
 export class CarsStore extends BaseStore {
   @observable cars: Array<Car> = [];
-  @observable userCars: Array<Car> = [];
   @observable car: Car | null = null;
-  @observable favorites: Array<Car> = [];
   @observable filter: CarFilter | null = null;
 
   constructor() {
@@ -46,7 +44,7 @@ export class CarsStore extends BaseStore {
     try {
       const cars = await carsApi.getUserCars();
       runInAction(() => {
-        this.userCars = cars;
+        this.cars = cars;
       });
     } catch (e) {
       this.errorHandler(e);
@@ -60,7 +58,7 @@ export class CarsStore extends BaseStore {
     try {
       const favorites = await carsApi.getFavorites();
       runInAction(() => {
-        this.favorites = favorites;
+        this.cars = favorites;
       });
     } catch (e) {
       this.errorHandler(e);
@@ -71,13 +69,9 @@ export class CarsStore extends BaseStore {
 
   @action toggleFavorite = async ({ id, is_favourite }: Car) => {
     try {
-      console.log(id, is_favourite);
       await carsApi.toggleFavorite(!is_favourite, id);
       runInAction(() => {
         this.cars = this.cars.map((car) =>
-          car.id === id ? { ...car, is_favourite: !is_favourite } : car,
-        );
-        this.favorites = this.favorites.map((car) =>
           car.id === id ? { ...car, is_favourite: !is_favourite } : car,
         );
       });
@@ -88,7 +82,6 @@ export class CarsStore extends BaseStore {
         } favorites`,
       });
     } catch (e) {
-      console.log(e);
       showMessage({
         type: 'error',
         message: `An error occured while ${!is_favourite ? 'adding' : 'removing'} car ${

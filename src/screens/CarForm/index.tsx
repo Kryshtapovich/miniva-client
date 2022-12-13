@@ -87,6 +87,15 @@ function Component() {
     return <Spacer vertical={'s'} />;
   };
 
+  const getFooter = () => {
+    return (
+      <>
+        {getSeparator()}
+        <FormImagePicker control={control} name={'car_photos'} error={errors['car_photos']} />
+      </>
+    );
+  };
+
   const submit = onSubmit(async (data) => {
     setIsLoading(true);
     try {
@@ -111,12 +120,7 @@ function Component() {
         renderItem={renderField}
         removeClippedSubviews={false}
         ListHeaderComponent={getHeader}
-        ListFooterComponent={
-          <>
-            {getSeparator()}
-            <FormImagePicker control={control} name={'car_photos'} error={errors['car_photos']} />
-          </>
-        }
+        ListFooterComponent={getFooter}
         enableResetScrollToCoords={false}
         showsVerticalScrollIndicator={false}
         ItemSeparatorComponent={getSeparator}

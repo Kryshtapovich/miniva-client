@@ -20,9 +20,7 @@ function Component(props: Props) {
   const { user, loading, editUser, errors: storeErrors, clearErrors } = userStore;
 
   useEffect(() => {
-    return () => {
-      clearErrors();
-    };
+    return clearErrors;
   }, []);
 
   const { control, errors: formErrors, onSubmit } = useEditUser(user);

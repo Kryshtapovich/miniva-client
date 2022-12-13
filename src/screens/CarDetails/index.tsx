@@ -7,13 +7,13 @@ import { observer } from 'mobx-react-lite';
 import { Button, IconButton, Paper, Spacer, Spinner, Typography } from '@components/common';
 import { RouteNames, RouteParams } from '@navigation';
 import { dateToLocal } from '@utils/helpers';
+import { theme } from '@utils/constants';
 import { Reviewer } from '@models';
 import { useStore } from '@store';
 
 import { ReviewersModal } from './ReviewersModal';
 import { ImageList } from './ImageList';
 import { useStyles } from './styles';
-import { theme } from '@utils/constants';
 
 function Component() {
   const { params } = useRoute<RouteParams<RouteNames.car>>();
@@ -35,6 +35,7 @@ function Component() {
   useEffect(() => {
     getUserChats();
     getReviewers();
+
     return () => {
       setCar(null);
     };
@@ -42,7 +43,7 @@ function Component() {
 
   const availableReviewers = useMemo(() => {
     const takenReviewers = chats.map(({ other_user }) => other_user.username);
-    return reviewers.filter((reviewer) => !takenReviewers.includes(reviewer.username));
+    return reviewers.filter(({ username }) => !takenReviewers.includes(username));
   }, [chats, reviewers]);
 
   useEffect(() => {
@@ -54,8 +55,9 @@ function Component() {
 
   const onReviewerPressed = (reviewer: Reviewer) => {
     setIsModalVisible(false);
-    user &&
+    if (user) {
       navigate(RouteNames.chat, { carId, sender: user.username, recipient: reviewer.username });
+    }
   };
 
   const getHeader = (style: StyleProp<ViewStyle>) => {

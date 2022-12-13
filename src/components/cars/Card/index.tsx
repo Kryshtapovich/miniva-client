@@ -5,11 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 import { FlashList } from '@shopify/flash-list';
 
 import { Icon, Image, ImageCarousel, Paper, Spacer, Typography } from '@components/common';
+import { theme } from '@utils/constants';
 import { RouteNames } from '@navigation';
 import { Car } from '@models';
 
 import { useStyles } from './styles';
-import { theme } from '@utils/constants';
 
 interface Props {
   car: Car;
