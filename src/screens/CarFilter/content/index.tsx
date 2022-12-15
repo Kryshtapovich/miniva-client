@@ -42,7 +42,7 @@ function Component(props: Props) {
   return (
     <>
       <FormSelector
-        name={'manufacturer'}
+        name={'manufacturer__id'}
         label={'Manufacturer'}
         control={control}
         options={options}
@@ -56,7 +56,7 @@ function Component(props: Props) {
         <View style={styles.row}>
           <View style={styles.rowPart}>
             <FormTextInput
-              name={'hp_lt'}
+              name={'hp__gt'}
               control={control}
               placeholder={'From'}
               keyboardType={'numeric'}
@@ -65,7 +65,7 @@ function Component(props: Props) {
           <Spacer horizontal={'s'} />
           <View style={styles.rowPart}>
             <FormTextInput
-              name={'hp_gt'}
+              name={'hp__lt'}
               control={control}
               placeholder={'To'}
               keyboardType={'numeric'}
@@ -83,7 +83,7 @@ function Component(props: Props) {
               options={engines}
               control={control}
               placeholder={'From'}
-              name={'engine_volume_lt'}
+              name={'engine_volume__gt'}
             />
           </View>
           <Spacer horizontal={'s'} />
@@ -92,7 +92,7 @@ function Component(props: Props) {
               options={engines}
               control={control}
               placeholder={'To'}
-              name={'engine_volume_gt'}
+              name={'engine_volume__lt'}
             />
           </View>
         </View>
@@ -105,7 +105,7 @@ function Component(props: Props) {
           <View style={styles.rowPart}>
             <FormTextInput
               control={control}
-              name={'price_lt'}
+              name={'price__gt'}
               placeholder={'From'}
               keyboardType={'numeric'}
             />
@@ -114,7 +114,7 @@ function Component(props: Props) {
           <View style={styles.rowPart}>
             <FormTextInput
               control={control}
-              name={'price_gt'}
+              name={'price__lt'}
               placeholder={'To'}
               keyboardType={'numeric'}
             />

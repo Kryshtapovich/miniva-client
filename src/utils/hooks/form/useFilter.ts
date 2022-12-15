@@ -5,14 +5,14 @@ import { CarFilter } from '@models';
 import { useForm } from './useForm';
 
 const defaultValues = {
-  manufacturer: 0,
+  manufacturer__id: 0,
   model: '',
-  hp_lt: 0,
-  hp_gt: 0,
-  price_lt: 0,
-  price_gt: 0,
-  engine_volume_lt: 0,
-  engine_volume_gt: 0,
+  hp__lt: 0,
+  hp__gt: 0,
+  price__lt: 0,
+  price__gt: 0,
+  engine_volume__lt: 0,
+  engine_volume__gt: 0,
 };
 
 export const useCarFilter = (filter: CarFilter | null) => {
